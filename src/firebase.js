@@ -12,3 +12,4 @@ firebase.initializeApp({
 });
 firebase.analytics();
 export const DB = firebase.firestore();
+export const FieldValue = firebase.firestore.FieldValue;

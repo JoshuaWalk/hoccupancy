@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "../views/Main.vue";
 import Detailed from "../views/Detailed.vue";
+import Vote from "../views/Vote.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,12 @@ const routes = [
     path: "/:id",
     name: "detailed",
     component: Detailed,
+    props: true
+  },
+  {
+    path: "/:id/vote",
+    name: "vote",
+    component: Vote,
     props: true
   }
 ];

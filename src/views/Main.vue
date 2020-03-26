@@ -27,10 +27,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("locations/list");
-    document.body.classList.add("has-navbar-fixed-top");
-  },
-  beforeDestroy() {
-    document.body.classList.remove("has-navbar-fixed-top");
   }
 };
 </script>

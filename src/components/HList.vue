@@ -28,7 +28,11 @@
         </div>
       </div>
       <div class="media-right">
-        <a class="button is-h is-small">Leave impression</a>
+        <router-link  class="button is-h is-small"
+              :to="{ name: 'vote', params: { id: item.id } }"
+              :title="item.name"
+              >Vote</router-link
+            >
       </div>
     </article>
   </div>
