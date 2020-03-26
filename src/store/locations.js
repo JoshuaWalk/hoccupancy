@@ -19,7 +19,7 @@ export default {
         .get();
       let item = snapShot.data();
       item.id = id;
-      item.status = await dispatch('obtainStatus', id)
+      item.status = await dispatch("obtainStatus", id);
       commit("detailed", item);
     },
     async detailedClear({ commit }) {
@@ -49,15 +49,15 @@ export default {
           .where("status", "==", "r")
           .get()
       ).size;
-      if (gAmount > 0 || yAmount > 0 || rAmount > 0) {
-        if (gAmount > Math.max(yAmount, rAmount)) {
-          return "g";
-        } else if (yAmount > Math.max(gAmount, rAmount)) {
-          return "y";
-        } else {
-          return "r";
-        }
+      if (gAmount > 0 || rAmount > 0 || rAmount > 0) {
+        let avg =
+          (gAmount * 0.01 + yAmount * 0.505 + rAmount * 0.995) /
+          (gAmount + yAmount + rAmount);
+        if (avg>0.66) return 'r';
+        if (avg>0.33) return 'y';
+        return 'g';
       }
+      return null;
     },
     async list({ commit, dispatch }) {
       let snapShot = await DB.collection("locations").get();
@@ -66,7 +66,7 @@ export default {
         items.push(Object.assign({}, { id: _.id }, _.data()))
       );
 
-      let amountRQs = items.map(_=>dispatch("obtainStatus", _.id));
+      let amountRQs = items.map(_ => dispatch("obtainStatus", _.id));
       let statuses = await Promise.all(amountRQs);
       for (let i = 0; i < items.length; i++) {
         items[i].status = statuses[i];
