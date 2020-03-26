@@ -49,7 +49,7 @@ export default {
           .where("status", "==", "r")
           .get()
       ).size;
-      if (gAmount > 0 || rAmount > 0 || rAmount > 0) {
+      if (gAmount > 0 || yAmount > 0 || rAmount > 0) {
         let avg =
           (gAmount * 0.01 + yAmount * 0.505 + rAmount * 0.995) /
           (gAmount + yAmount + rAmount);
