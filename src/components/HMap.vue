@@ -73,8 +73,8 @@ export default {
       return L.latLng(item.lat, item.lon);
     },
     getIcon(item) {
-      if(!item.status) return this.no;
-      switch (item.status) {
+      if(!item.statistics.status) return this.no;
+      switch (item.statistics.status) {
         case "r":
           return this.r;
         case "g":

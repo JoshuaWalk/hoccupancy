@@ -15,4 +15,7 @@
 .navbar-brand {
   margin-left: 0 !important;
 }
+.navbar{
+  box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1);
+}
 </style>

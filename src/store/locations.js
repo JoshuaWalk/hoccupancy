@@ -1,16 +1,15 @@
-import { DB, FieldValue } from "@/firebase";
+import { DB } from "@/firebase";
 export default {
   namespaced: true,
   state: {
     items: [],
-    status: null,
     votes: [],
     detailed: null
   },
   mutations: {
     items: (state, items) => (state.items = items),
     detailed: (state, detailed) => (state.detailed = detailed),
-    votes: (state, votes) => (state.votes = votes)
+    votes: (state, votes) => (state.votes = votes),
   },
   actions: {
     async detailed({ commit, dispatch }, { id }) {
@@ -19,15 +18,14 @@ export default {
         .get();
       let item = snapShot.data();
       item.id = id;
-      item.status = await dispatch("obtainStatus", id);
+      item.statistics = await dispatch("obtainStatistics", id);
       commit("detailed", item);
     },
     async detailedClear({ commit }) {
       commit("detailed", null);
       commit("votes", []);
-      commit("status", false);
     },
-    async obtainStatus(_, id) {
+    async obtainStatistics(_, id) {
       let gAmount = (
         await DB.collection("locations")
           .doc(id)
@@ -53,11 +51,17 @@ export default {
         let avg =
           (gAmount * 0.01 + yAmount * 0.505 + rAmount * 0.995) /
           (gAmount + yAmount + rAmount);
-        if (avg>0.66) return 'r';
-        if (avg>0.33) return 'y';
-        return 'g';
+        let status = "g";
+        if (avg > 0.66) {
+          status = "r";
+        } else if (avg > 0.33) {
+          status = "y";
+        } else {
+          status = "g";
+        }
+        return { status, amounts: { gAmount, rAmount, yAmount } };
       }
-      return null;
+      return { status: null, amounts: { gAmount, rAmount, yAmount } };
     },
     async list({ commit, dispatch }) {
       let snapShot = await DB.collection("locations").get();
@@ -66,10 +70,10 @@ export default {
         items.push(Object.assign({}, { id: _.id }, _.data()))
       );
 
-      let amountRQs = items.map(_ => dispatch("obtainStatus", _.id));
+      let amountRQs = items.map(_ => dispatch("obtainStatistics", _.id));
       let statuses = await Promise.all(amountRQs);
       for (let i = 0; i < items.length; i++) {
-        items[i].status = statuses[i];
+        items[i].statistics = statuses[i];
       }
       commit("items", items);
     },
@@ -80,8 +84,7 @@ export default {
         .doc()
         .set({
           comment,
-          status,
-          createdAt: FieldValue.serverTimestamp()
+          status
         });
     },
     async votes({ commit }, { id }) {
