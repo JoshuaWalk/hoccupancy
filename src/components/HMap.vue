@@ -23,6 +23,11 @@ export default {
       url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      no: L.icon({
+        iconUrl: "/svg/marker_noinfo.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
+      }),
       y: L.icon({
         iconUrl: "/svg/marker_warning.svg",
         iconSize: [40, 40],
@@ -68,6 +73,7 @@ export default {
       return L.latLng(item.lat, item.lon);
     },
     getIcon(item) {
+      if(!item.status) return this.no;
       switch (item.status) {
         case "r":
           return this.r;

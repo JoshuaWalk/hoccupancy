@@ -3,43 +3,74 @@ export default {
   namespaced: true,
   state: {
     items: [],
+    status: null,
     votes: [],
     detailed: null
   },
   mutations: {
     items: (state, items) => (state.items = items),
     detailed: (state, detailed) => (state.detailed = detailed),
-    votes: (state, votes) => (state.votes = votes),
+    votes: (state, votes) => (state.votes = votes)
   },
   actions: {
-    async detailed({ commit }, { id }) {
+    async detailed({ commit, dispatch }, { id }) {
       let snapShot = await DB.collection("locations")
         .doc(id)
         .get();
       let item = snapShot.data();
       item.id = id;
-
-      //start todo
-      let statuses = ["g", "y", "r"];
-      item.status = statuses[Math.floor(Math.random() * statuses.length)];
-      //end todo
+      item.status = await dispatch('obtainStatus', id)
       commit("detailed", item);
     },
     async detailedClear({ commit }) {
       commit("detailed", null);
+      commit("votes", []);
+      commit("status", false);
     },
-    async list({ commit }) {
+    async obtainStatus(_, id) {
+      let gAmount = (
+        await DB.collection("locations")
+          .doc(id)
+          .collection("votes")
+          .where("status", "==", "g")
+          .get()
+      ).size;
+      let yAmount = (
+        await DB.collection("locations")
+          .doc(id)
+          .collection("votes")
+          .where("status", "==", "y")
+          .get()
+      ).size;
+      let rAmount = (
+        await DB.collection("locations")
+          .doc(id)
+          .collection("votes")
+          .where("status", "==", "r")
+          .get()
+      ).size;
+      if (gAmount > 0 || yAmount > 0 || rAmount > 0) {
+        if (gAmount > Math.max(yAmount, rAmount)) {
+          return "g";
+        } else if (yAmount > Math.max(gAmount, rAmount)) {
+          return "y";
+        } else {
+          return "r";
+        }
+      }
+    },
+    async list({ commit, dispatch }) {
       let snapShot = await DB.collection("locations").get();
       let items = [];
       snapShot.forEach(_ =>
         items.push(Object.assign({}, { id: _.id }, _.data()))
       );
-      //start todo
-      let statuses = ["g", "y", "r"];
-      items.forEach(
-        _ => (_.status = statuses[Math.floor(Math.random() * statuses.length)])
-      );
-      //end todo
+
+      let amountRQs = items.map(_=>dispatch("obtainStatus", _.id));
+      let statuses = await Promise.all(amountRQs);
+      for (let i = 0; i < items.length; i++) {
+        items[i].status = statuses[i];
+      }
       commit("items", items);
     },
     async vote(_, { id, comment, status }) {
@@ -53,13 +84,13 @@ export default {
           createdAt: FieldValue.serverTimestamp()
         });
     },
-    async votes({commit}, { id }) {
+    async votes({ commit }, { id }) {
       let votesSnaphot = await DB.collection("locations")
         .doc(id)
         .collection("votes")
         .get();
-        let votes = [];
-      votesSnaphot.forEach(_=>votes.push(_.data()));
+      let votes = [];
+      votesSnaphot.forEach(_ => votes.push(_.data()));
       commit("votes", votes);
     }
   }

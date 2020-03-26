@@ -9,10 +9,16 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <span class="tag is-success" v-if="!item.status">OK</span>
-            <span class="tag is-success" v-else-if="item.status == 'g'">OK</span>
-            <span class="tag is-warning" v-else-if="item.status == 'y'">Not OK</span>
-            <span class="tag is-danger" v-else-if="item.status == 'r'">Bad</span>
+            <span class="tag is-grey-darker" v-if="!item.status">No info</span>
+            <span class="tag is-success" v-else-if="item.status == 'g'"
+              >OK</span
+            >
+            <span class="tag is-warning" v-else-if="item.status == 'y'"
+              >Not OK</span
+            >
+            <span class="tag is-danger" v-else-if="item.status == 'r'"
+              >Bad</span
+            >
             &nbsp;
             <router-link
               :to="{ name: 'detailed', params: { id: item.id } }"
@@ -28,11 +34,12 @@
         </div>
       </div>
       <div class="media-right">
-        <router-link  class="button is-h is-small"
-              :to="{ name: 'vote', params: { id: item.id } }"
-              :title="item.name"
-              >Vote</router-link
-            >
+        <router-link
+          class="button is-h is-small"
+          :to="{ name: 'vote', params: { id: item.id } }"
+          :title="item.name"
+          >Vote</router-link
+        >
       </div>
     </article>
   </div>
@@ -44,27 +51,31 @@ export default {
   computed: {
     ...mapState("locations", ["items"])
   },
-  methods:{
-    showOnMap(item){
-      eventBus.$emit('showOnMap', item)
+  methods: {
+    showOnMap(item) {
+      eventBus.$emit("showOnMap", item);
     }
   },
-  watch:{
-    items(to){
-      if(to.length > 0) {
-        eventBus.$emit('showOnMap', to[0])
+  watch: {
+    items(to) {
+      if (to.length > 0) {
+        eventBus.$emit("showOnMap", to[0]);
       }
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+@import "~bulma/sass/utilities/_all";
 .hlist-wrapper {
   height: 100%;
 }
-</style>
-<style lang="scss" scoped>
 .image {
   cursor: pointer;
+}
+.media-left {
+  @include touch() {
+    display: none;
+  }
 }
 </style>
