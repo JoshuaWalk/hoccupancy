@@ -4,11 +4,11 @@
     <section class="hero" v-if="detailed">
       <div class="hero-body">
         <div class="container">
-          <router-link
+          <a
             class="button is-h is-small leave-impression"
-            :to="{ name: 'vote', params: { id: detailed.id } }"
+            @click="leaveFeedback"
             :title="detailed.name"
-            >Vote</router-link
+            >Vote</a
           >
           <h1 class="title">
             {{ detailed.Name }}
@@ -34,26 +34,40 @@
       </div>
     </section>
     <section class="section">
-      <VoteItem v-for="(item, key) in votes" :key="key" :item="item"/>
+      <VoteItem v-for="(item, key) in votes" :key="key" :item="item" />
     </section>
+    <ModalLogin />
   </div>
 </template>
 <script>
 import Nav from "@/components/Nav";
+import ModalLogin from "@/components/ModalLogin";
 import VoteItem from "@/components/VoteItem";
 import { mapState } from "vuex";
+import eventBus from "@/eventbus";
 export default {
   props: ["id"],
   components: {
     VoteItem,
-    Nav
+    Nav,
+    ModalLogin
   },
   computed: {
-    ...mapState("locations", ["detailed", "votes"])
+    ...mapState("locations", ["detailed", "votes"]),
+    ...mapState("user", ["currentUser"])
   },
   mounted() {
     this.$store.dispatch("locations/detailed", { id: this.id });
     this.$store.dispatch("locations/votes", { id: this.id });
+  },
+  methods: {
+    leaveFeedback() {
+      if (!this.currentUser) {
+        eventBus.$emit("showModalLogin");
+        return;
+      }
+      this.$router.push({ name: "vote", params: { id: this.detailed.id } });
+    }
   },
   beforeDestroy() {
     this.$store.dispatch("locations/detailedClear");

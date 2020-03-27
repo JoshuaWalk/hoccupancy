@@ -13,17 +13,20 @@
         <Map />
       </div>
     </div>
+    <ModalLogin/>
   </div>
 </template>
 <script>
 import Nav from "@/components/Nav";
 import List from "@/components/List";
 import Map from "@/components/Map";
+import ModalLogin from "@/components/ModalLogin";
 export default {
   components: {
     Nav,
     List,
-    Map
+    Map,
+    ModalLogin
   },
   mounted() {
     this.$store.dispatch("locations/list");

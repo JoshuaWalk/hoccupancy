@@ -39,6 +39,7 @@ export default {
       commit("detailed", item);
     },
     async detailedClear({ commit }) {
+      window.console.log("detailedClear")
       commit("detailed", null);
       commit("votes", []);
     },
@@ -59,7 +60,7 @@ export default {
         .set({
           comment,
           status,
-          uid: this.state.user.currentUser.uid
+          uid: this.state.user.currentUser.uid,
         });
     },
     async votes({ commit }, { id }) {
@@ -70,6 +71,7 @@ export default {
         .get();
       let votes = [];
       votesSnaphot.forEach(_ => votes.push(Object.assign({}, _.data(), {id:_.id})));
+
       commit("votes", votes);
     },
     report: async (_, { id, voteId }) => {

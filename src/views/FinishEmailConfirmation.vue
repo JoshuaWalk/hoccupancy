@@ -3,10 +3,13 @@
     <div class="hero-body">
       <div class="container" v-if="!needToInput">
         <h1 class="title">
-          Email confirmation...
+          Email confirmation
         </h1>
-        <h2 class="subtitle">
+        <h2 class="subtitle" v-if="!error">
           You'll be able to continue in few seconds...
+        </h2>
+        <h2 class="subtitle has-text-danger" v-else>
+          {{ error }}
         </h2>
       </div>
       <div class="container" v-else>
@@ -36,12 +39,25 @@
 export default {
   data: () => ({
     needToInput: true,
-    email: ""
+    email: "",
+    error: ""
   }),
   methods: {
     async verifyEmail() {
-      await this.$store.dispatch("user/verifyEmailSignInLink", { email: this.email });
-      this.$router.push({name:"vote",params:{id:this.$route.query.locationId}});
+      try {
+        await this.$store.dispatch("user/verifyEmailSignInLink", {
+          email: this.email
+        });
+        this.$router.push({
+          name: "vote",
+          params: { id: this.$route.query.locationId }
+        });
+      } catch (error) {
+        this.error = error.message;
+        setTimeout(() => {
+          this.$router.push({ name: "main" });
+        }, 2500);
+      }
     }
   },
   async mounted() {
@@ -52,6 +68,7 @@ export default {
   },
   beforeDestroy() {
     document.body.classList.add("has-navbar-fixed-top");
+    this.$store.dispatch("locations/detailedClear");
   }
 };
 </script>

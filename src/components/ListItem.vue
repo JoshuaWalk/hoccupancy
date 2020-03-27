@@ -64,11 +64,8 @@
         <nav class="level is-mobile">
           <div class="level-left">
             <div class="level-item">
-              <router-link
-                class="button is-h "
-                :to="{ name: 'vote', params: { id: item.id } }"
-                :title="item.name"
-                >Feedback</router-link
+              <a class="button is-h " @click="leaveFeedback" :title="item.name"
+                >Feedback</a
               >
             </div>
           </div>
@@ -87,15 +84,25 @@
 <script>
 import MapMarker from "mdi-vue/MapMarker";
 import eventBus from "@/eventbus";
-
+import { mapState } from "vuex";
 export default {
   props: ["item"],
   components: { MapMarker },
+  computed: {
+    ...mapState("user", ["currentUser"])
+  },
   methods: {
     showOnMap(item) {
       eventBus.$emit("showOnMap", item);
+    },
+    leaveFeedback() {
+      if (!this.currentUser) {
+        eventBus.$emit("showModalLogin");
+        return;
+      }
+      this.$router.push({ name: "vote", params: { id: this.item.id } });
     }
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

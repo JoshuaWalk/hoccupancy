@@ -14,11 +14,9 @@ export default {
     deleteEmail: async () => window.localStorage.removeItem("emailForSignIn"),
     retrieveEmail: async () => window.localStorage.getItem("emailForSignIn"),
     load({ commit }) {
-      window.console.log(Auth.currentUser);
       commit("currentUser", Auth.currentUser);
     },
     async requestEmailSignInLink({ dispatch }, { email, locationId }) {
-      window.console.log(process.env.VUE_APP_FIREBASE_EMAIL_SIGNIN_URL);
       var actionCodeSettings = {
         url: `${process.env.VUE_APP_FIREBASE_EMAIL_SIGNIN_URL}?locationId=${locationId}`,
         handleCodeInApp: true
@@ -28,7 +26,6 @@ export default {
     },
     async verifyEmailSignInLink({ commit, dispatch }, { email }) {
       if (Auth.isSignInWithEmailLink(window.location.href)) {
-        window.console.log(email);
         if (!email) throw new Error("Empty email");
         await Auth.signInWithEmailLink(email, window.location.href);
         dispatch("deleteEmail");

@@ -4,7 +4,8 @@ import Main from "../views/Main.vue";
 import Detailed from "../views/Detailed.vue";
 import Vote from "../views/Vote.vue";
 import FinishEmailConfirmation from "../views/FinishEmailConfirmation.vue";
-
+import EmailSignIn from "../views/EmailSignIn.vue";
+import store from "../store";
 Vue.use(VueRouter);
 
 const routes = [
@@ -12,6 +13,11 @@ const routes = [
     path: "/",
     name: "main",
     component: Main
+  },
+  {
+    path: "/signin",
+    name: "signin",
+    component: EmailSignIn
   },
   {
     path: "/email-confirmation",
@@ -22,7 +28,10 @@ const routes = [
     path: "/:id/vote",
     name: "vote",
     component: Vote,
-    props: true
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/:id",
@@ -36,6 +45,13 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const currentUser = store.state.user.currentUser;
+  const requiresAuth = to.matched.some(route => route.meta.requiresAuth);
+  if (requiresAuth && !currentUser) next({ name: "signin" });
+  else next();
 });
 
 export default router;
