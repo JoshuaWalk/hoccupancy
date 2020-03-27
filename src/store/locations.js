@@ -1,6 +1,6 @@
 import { DB } from "@/firebase";
 
-function calculateCurrentStats({g, y, r}) {
+function calculateCurrentStats({ g, y, r }) {
   if (g > 0 || y > 0 || r > 0) {
     let avg = (g * 0.01 + y * 0.505 + r * 0.995) / (g + y + r);
     let status = "g";
@@ -48,7 +48,7 @@ export default {
       snapShot.forEach(_ =>
         items.push(Object.assign({}, { id: _.id }, _.data()))
       );
-      items.forEach(_ => _.statistics = calculateCurrentStats(_));
+      items.forEach(_ => (_.statistics = calculateCurrentStats(_)));
       commit("items", items);
     },
     async vote(_, { id, comment, status }) {
@@ -66,10 +66,18 @@ export default {
       let votesSnaphot = await DB.collection("locations")
         .doc(id)
         .collection("votes")
+        .orderBy("createdAt", "desc")
         .get();
       let votes = [];
-      votesSnaphot.forEach(_ => votes.push(_.data()));
+      votesSnaphot.forEach(_ => votes.push(Object.assign({}, _.data(), {id:_.id})));
       commit("votes", votes);
+    },
+    report: async (_, { id, voteId }) => {
+      await DB.collection("locations")
+        .doc(id).collection('votes').doc(voteId)
+        .update({
+          reported: true
+        })
     }
   }
 };

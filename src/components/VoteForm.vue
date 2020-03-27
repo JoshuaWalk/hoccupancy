@@ -56,7 +56,7 @@ export default {
         comment: this.comment,
         status: this.status
       });
-      this.$store.dispatch("locations/detailed", { id: this.$route.params.id });
+      this.$router.push({name:"detailed", params:{ id: this.$route.params.id }});
     }
   }
 };

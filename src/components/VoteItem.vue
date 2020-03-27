@@ -6,11 +6,19 @@
           <p>
             <strong>{{ item.email }}</strong>
             <br />
-            <small>{{date}}</small>
+            <small>{{ date }}</small>
             <br />
             {{ item.comment }}
+            <br />
           </p>
         </div>
+        <nav class="level">
+          <div class="level-left">
+            <div class="level-item">
+             <a class="button is-h is-outlined is-small" @click="report">Report</a>
+            </div>
+          </div>
+        </nav>
       </div>
       <div class="media-right">
         <span class="tag is-success" v-if="!item.status">OK</span>
@@ -29,6 +37,14 @@ export default {
   computed: {
     date() {
       return new Date(this.item.createdAt).toGMTString();
+    }
+  },
+  methods: {
+    report() {
+      this.$store.dispatch("locations/report", {
+        id: this.$route.params.id,
+        voteId: this.item.id
+      });
     }
   }
 };
