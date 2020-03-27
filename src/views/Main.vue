@@ -1,29 +1,29 @@
 <template>
   <div class=" main-page">
     <Nav class="nav-component" />
-    <div class="columns without-side-margins hlist-main-wrapper">
+    <div class="columns without-side-margins list-main-wrapper">
       <div
-        class="column is-12-touch is-6-desktop columns is-multiline is-marginless hlist-wrapper without-side-paddings without-side-margins"
+        class="column is-12-touch is-6-desktop columns is-multiline is-marginless list-wrapper without-side-paddings without-side-margins"
       >
         <div class="column is-12">
-          <HList />
+          <List />
         </div>
       </div>
       <div class="column is-12-touch is-6-desktop without-side-paddings map-view">
-        <HMap />
+        <Map />
       </div>
     </div>
   </div>
 </template>
 <script>
 import Nav from "@/components/Nav";
-import HList from "@/components/HList";
-import HMap from "@/components/HMap";
+import List from "@/components/List";
+import Map from "@/components/Map";
 export default {
   components: {
     Nav,
-    HList,
-    HMap
+    List,
+    Map
   },
   mounted() {
     this.$store.dispatch("locations/list");
@@ -32,7 +32,7 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "~bulma/sass/utilities/_all";
-.hlist-main-wrapper {
+.list-main-wrapper {
   align-items: stretch;
   height: 100%;
   & > .column {
@@ -55,7 +55,7 @@ export default {
   margin-right: 0 !important;
   margin-top: 0 !important;
 }
-.hlist-wrapper {
+.list-wrapper {
   min-height: 0px;
   flex-direction: column;
   & > .column {

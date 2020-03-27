@@ -1,14 +1,14 @@
 <template>
-  <div class="hlist-wrapper">
-    <HListItem v-for="(item, key) in items" :key="key" :item="item" class="hospital-item"/>
+  <div class="list-wrapper">
+    <ListItem v-for="(item, key) in items" :key="key" :item="item" class="hospital-item"/>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
 import eventBus from "@/eventbus";
-import HListItem from './HListItem'
+import ListItem from './ListItem'
 export default {
-  components:{HListItem},
+  components:{ListItem},
   computed: {
     ...mapState("locations", ["items"])
   },
@@ -22,7 +22,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.hlist-wrapper {
+.list-wrapper {
   height: 100%;
 }
 

@@ -7,10 +7,14 @@ import "leaflet/dist/leaflet.css";
 import { Auth } from "./firebase";
 Vue.config.productionTip = false;
 
+let app = null;
 Auth.onAuthStateChanged(async () => {
-  new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount("#app");
+  if (!app) {
+    await store.dispatch("user/load");
+    app = new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount("#app");
+  }
 });

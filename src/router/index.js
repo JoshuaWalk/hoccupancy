@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Main from "../views/Main.vue";
 import Detailed from "../views/Detailed.vue";
 import Vote from "../views/Vote.vue";
+import FinishEmailConfirmation from "../views/FinishEmailConfirmation.vue";
 
 Vue.use(VueRouter);
 
@@ -13,15 +14,20 @@ const routes = [
     component: Main
   },
   {
-    path: "/:id",
-    name: "detailed",
-    component: Detailed,
-    props: true
+    path: "/email-confirmation",
+    name: "email-confirmation",
+    component: FinishEmailConfirmation
   },
   {
     path: "/:id/vote",
     name: "vote",
     component: Vote,
+    props: true
+  },
+  {
+    path: "/:id",
+    name: "detailed",
+    component: Detailed,
     props: true
   }
 ];

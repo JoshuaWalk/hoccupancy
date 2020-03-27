@@ -58,7 +58,8 @@ export default {
         .doc()
         .set({
           comment,
-          status
+          status,
+          uid: this.state.user.currentUser.uid
         });
     },
     async votes({ commit }, { id }) {

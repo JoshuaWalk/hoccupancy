@@ -4,6 +4,10 @@
       <div class="media-content">
         <div class="content">
           <p>
+            <strong>{{ item.email }}</strong>
+            <br />
+            <small>{{date}}</small>
+            <br />
             {{ item.comment }}
           </p>
         </div>
@@ -21,6 +25,11 @@
 </template>
 <script>
 export default {
-  props: ["item"]
+  props: ["item"],
+  computed: {
+    date() {
+      return new Date(this.item.createdAt).toGMTString();
+    }
+  }
 };
 </script>
