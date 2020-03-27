@@ -2,10 +2,11 @@
   <l-map :zoom="zoom" :center="center" ref="theMap" :options="options">
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-marker
-      v-for="(item, key) in items"
-      :lat-lng="createMarker(item)"
-      :icon="getIcon(item)"
+      v-for="(item, key) in itemsShowOnMap"
+      :lat-lng="item.marker"
+      :icon="item.icon"
       :key="key"
+      :class="{ 'is-active': item.isActive }"
     ></l-marker>
   </l-map>
 </template>
@@ -23,31 +24,36 @@ export default {
       url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      no: L.icon({
-        iconUrl: "/svg/marker_noinfo.svg",
+      icons: {
+        no: "/svg/marker_noinfo.svg",
+        g: "/svg/marker_ok.svg",
+        y: "/svg/marker_warning.svg",
+        r: "/svg/marker_danger.svg"
+      },
+      unactive: {
         iconSize: [40, 40],
         iconAnchor: [20, 20]
-      }),
-      y: L.icon({
-        iconUrl: "/svg/marker_warning.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20]
-      }),
-      g: L.icon({
-        iconUrl: "/svg/marker_ok.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20]
-      }),
-      r: L.icon({
-        iconUrl: "/svg/marker_danger.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20]
-      }),
+      },
+      active: {
+        iconSize: [50, 50],
+        iconAnchor: [25, 25]
+      },
       showOnMap: null
     };
   },
   computed: {
     ...mapState("locations", ["items"]),
+    itemsShowOnMap() {
+      let items = this.items.map(_ => {
+        let result = Object.assign({}, _, {
+          marker: this.createMarker(_),
+          isActive: this.showOnMap && _.id == this.showOnMap.id
+        });
+        result.icon = this.getIcon(result);
+        return result;
+      });
+      return items;
+    },
     center() {
       if (!this.showOnMap) return L.latLng(this.latitude, this.longitude);
       return L.latLng(this.showOnMap.lat, this.showOnMap.lon);
@@ -73,15 +79,15 @@ export default {
       return L.latLng(item.lat, item.lon);
     },
     getIcon(item) {
-      if(!item.statistics.status) return this.no;
-      switch (item.statistics.status) {
-        case "r":
-          return this.r;
-        case "g":
-          return this.g;
-        case "y":
-          return this.y;
-      }
+      let status = !item.statistics.status ? "no" : item.statistics.status;
+      return L.icon(
+        Object.assign(
+          {
+            iconUrl: this.icons[status]
+          },
+          item.isActive ? this.active : this.unactive
+        )
+      );
     }
   },
   mounted() {
@@ -92,3 +98,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.is-active {
+  z-index: 1000;
+}
+</style>

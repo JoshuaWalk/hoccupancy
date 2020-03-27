@@ -3,12 +3,14 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-import 'leaflet/dist/leaflet.css';
-
+import "leaflet/dist/leaflet.css";
+import { Auth } from "./firebase";
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+Auth.onAuthStateChanged(async () => {
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount("#app");
+});
