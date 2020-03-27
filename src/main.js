@@ -9,8 +9,8 @@ Vue.config.productionTip = false;
 
 let app = null;
 Auth.onAuthStateChanged(async () => {
+  await store.dispatch("user/load");
   if (!app) {
-    await store.dispatch("user/load");
     app = new Vue({
       router,
       store,
