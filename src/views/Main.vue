@@ -1,5 +1,6 @@
 <template>
   <div class=" main-page">
+    <ModalLogin/>
     <Nav class="nav-component" />
     <div class="columns without-side-margins list-main-wrapper">
       <div
@@ -13,7 +14,6 @@
         <Map />
       </div>
     </div>
-    <ModalLogin/>
   </div>
 </template>
 <script>

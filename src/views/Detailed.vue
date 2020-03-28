@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ModalLogin />
     <Nav class="nav-component" />
     <section class="hero" v-if="detailed">
       <div class="hero-body">
@@ -36,7 +37,6 @@
     <section class="section">
       <VoteItem v-for="(item, key) in votes" :key="key" :item="item" />
     </section>
-    <ModalLogin />
   </div>
 </template>
 <script>
