@@ -19,10 +19,10 @@ const routes = [
   {
     path: "/admin",
     component: Admin,
-    children:[
+    children: [
       {
         path: "reports",
-        name:'reports',
+        name: "reports",
         component: ListReport,
         meta: {
           requiresAuth: true
@@ -30,7 +30,7 @@ const routes = [
       },
       {
         path: "",
-        redirect: 'reports'
+        redirect: "reports"
       }
     ]
   },

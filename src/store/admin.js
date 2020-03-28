@@ -15,25 +15,28 @@ export default {
       reportsSnapshot.forEach(_ => reports.push(_.data()));
       commit("reports", reports);
     },
-    async deleteReport({ state,commit }, { locationId, voteId, index }) {
+    async deleteReport({ state, commit }, { locationId, voteId, index }) {
       await DB.collection("locations")
         .doc(locationId)
         .collection("votes")
         .doc(voteId)
         .delete();
       let reports = [...state.reports];
-      reports.splice(index, 1)
+      reports.splice(index, 1);
       commit("reports", reports);
     },
-    async updateAndPublishReport({ state,commit }, { locationId, voteId, index, comment }) {
+    async updateAndPublishReport(
+      { state, commit },
+      { locationId, voteId, index, comment }
+    ) {
       await DB.collection("locations")
         .doc(locationId)
         .collection("votes")
         .doc(voteId)
-        .update({comment, reported: false});
+        .update({ comment, reported: false });
 
       let reports = [...state.reports];
-      reports.splice(index, 1)
+      reports.splice(index, 1);
       commit("reports", reports);
     }
   }
