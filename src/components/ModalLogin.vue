@@ -54,20 +54,25 @@
 <script>
 import EmailOutline from "mdi-vue/EmailOutline";
 import eventBus from "@/eventbus";
+import {mapState} from "vuex";
 export default {
   components: {
     EmailOutline
   },
   data: () => ({
+    locationId:null,
     email: "",
     emailSent: false,
     isActive: false
   }),
+  computed:{
+    ...mapState('user',['currentUser'])
+  },
   methods: {
     requestConfirmation() {
       this.$store.dispatch("user/requestEmailSignInLink", {
         email: this.email,
-        locationId: this.$route.params.id
+        locationId: this.locationId
       });
       this.emailSent = true;
       setTimeout(() => {
@@ -79,7 +84,8 @@ export default {
     }
   },
   mounted() {
-    eventBus.$on("showModalLogin", () => {
+    eventBus.$on("showModalLogin", locationId => {
+      this.locationId = locationId;
       this.isActive = true;
       if (this.emailSent) {
         setTimeout(() => {
@@ -87,6 +93,11 @@ export default {
         }, 2000);
       }
     });
+  },
+  watch:{
+    currentUser(){
+      this.emailSent = false;
+    }
   }
 };
 </script>

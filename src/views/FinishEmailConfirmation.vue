@@ -48,10 +48,16 @@ export default {
         await this.$store.dispatch("user/verifyEmailSignInLink", {
           email: this.email
         });
-        this.$router.push({
-          name: "vote",
-          params: { id: this.$route.query.locationId }
-        });
+        if (this.$route.query.locationId) {
+          this.$router.push({
+            name: "vote",
+            params: { id: this.$route.query.locationId }
+          });
+        } else {
+          this.$router.push({
+            name: "main"
+          });
+        }
       } catch (error) {
         this.error = error.message;
         setTimeout(() => {

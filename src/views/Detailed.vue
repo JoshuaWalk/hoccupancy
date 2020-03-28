@@ -63,7 +63,7 @@ export default {
   methods: {
     leaveFeedback() {
       if (!this.currentUser) {
-        eventBus.$emit("showModalLogin");
+        eventBus.$emit("showModalLogin", this.id );
         return;
       }
       this.$router.push({ name: "vote", params: { id: this.detailed.id } });

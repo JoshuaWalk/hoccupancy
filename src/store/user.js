@@ -1,24 +1,30 @@
 import { Auth } from "@/firebase";
+import { DB } from "../firebase";
 
 export default {
   namespaced: true,
   state: {
-    currentUser: null
+    currentUser: null,
+    roles:[]
   },
   mutations: {
-    currentUser: (state, currentUser) => (state.currentUser = currentUser)
+    currentUser: (state, currentUser) => (state.currentUser = currentUser),
+    roles:(state, roles) => (state.roles = roles),
   },
   actions: {
     saveEmail: async (_, email) =>
       window.localStorage.setItem("emailForSignIn", email),
     deleteEmail: async () => window.localStorage.removeItem("emailForSignIn"),
     retrieveEmail: async () => window.localStorage.getItem("emailForSignIn"),
-    load({ commit }) {
+    load({ commit, dispatch }) {
       commit("currentUser", Auth.currentUser);
+      dispatch("requestRoles")
     },
     async requestEmailSignInLink({ dispatch }, { email, locationId }) {
       var actionCodeSettings = {
-        url: `${process.env.VUE_APP_FIREBASE_EMAIL_SIGNIN_URL}?locationId=${locationId}`,
+        url: `${process.env.VUE_APP_FIREBASE_EMAIL_SIGNIN_URL}${
+          locationId ? "?locationId=" + locationId : ""
+        }`,
         handleCodeInApp: true
       };
       await Auth.sendSignInLinkToEmail(email, actionCodeSettings);
@@ -35,6 +41,16 @@ export default {
     async signOut({ commit }) {
       await Auth.signOut();
       commit("currentUser", Auth.currentUser);
+    },
+    async requestRoles({ commit, state }){
+      let roles = [];
+      try {
+        let rolesSnapshot = await DB.collection('user_role').doc(state.currentUser.uid).collection('roles').get();
+        rolesSnapshot.forEach(_=>roles.push(_.id))
+      } catch (error) {
+        //todo notify
+      }
+      commit('roles', roles);
     }
   }
 };

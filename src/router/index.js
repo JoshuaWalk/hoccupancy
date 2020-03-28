@@ -5,6 +5,8 @@ import Detailed from "../views/Detailed.vue";
 import Vote from "../views/Vote.vue";
 import FinishEmailConfirmation from "../views/FinishEmailConfirmation.vue";
 import EmailSignIn from "../views/EmailSignIn.vue";
+import Admin from "../views/Admin.vue";
+import ListReport from "../components/admin/ListReport";
 import store from "../store";
 Vue.use(VueRouter);
 
@@ -13,6 +15,24 @@ const routes = [
     path: "/",
     name: "main",
     component: Main
+  },
+  {
+    path: "/admin",
+    component: Admin,
+    children:[
+      {
+        path: "reports",
+        name:'reports',
+        component: ListReport,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: "",
+        redirect: 'reports'
+      }
+    ]
   },
   {
     path: "/signin",
