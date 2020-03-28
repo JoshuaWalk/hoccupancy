@@ -94,4 +94,8 @@ export default {
 .modal {
   z-index: 9999;
 }
+.modal-content,
+.modal-card {
+  max-height: inherit;
+}
 </style>
