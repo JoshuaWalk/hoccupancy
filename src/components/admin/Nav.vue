@@ -8,21 +8,31 @@
       <router-link class="navbar-item" to="/">
         <img src="/svg/logo.svg" width="28" height="28" />
       </router-link>
+      <a
+        role="button"
+        class="navbar-burger burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
     </div>
     <div class="navbar-menu">
+      <div class="navbar-start">
+        <router-link class="navbar-item" :to="{name:'reports'}" active-class="is-active">
+          Reports
+        </router-link>
+
+      </div>
+
       <div class="navbar-end">
         <div class="navbar-item">
-          <div class="buttons" v-if="currentUser">
-            <router-link class="button is-h is-outlined  is-small" v-if="hasAdminRight" :to="{name:'reports'}">
-              Administration panel
-            </router-link>
-            <a class="button is-h is-outlined  is-small" @click="logOut">
+          <div class="buttons">
+            <a class="button is-h  is-small is-outlined" @click="logOut">
               Log out
-            </a>
-          </div>
-          <div class="buttons" v-else>
-            <a class="button is-h is-outlined is-small" @click="logIn">
-              Log in
             </a>
           </div>
         </div>
@@ -31,22 +41,11 @@
   </nav>
 </template>
 <script>
-import {mapState} from 'vuex';
-import eventBus from '@/eventbus'
 export default {
-  computed:{
-    ...mapState('user',['currentUser','roles']),
-    hasAdminRight(){
-      return this.roles && this.roles.length > 0;
-    }
-  },
   methods:{
     async logOut(){
       await this.$store.dispatch("user/signOut");
       this.$router.push({name:'main'})
-    },
-    async logIn(){
-      eventBus.$emit("showModalLogin", this.id );
     }
   }
 }

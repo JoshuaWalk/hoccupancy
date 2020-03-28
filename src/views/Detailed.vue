@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ModalLogin />
     <Nav class="nav-component" />
     <section class="hero" v-if="detailed">
       <div class="hero-body">
@@ -36,7 +37,6 @@
     <section class="section">
       <VoteItem v-for="(item, key) in votes" :key="key" :item="item" />
     </section>
-    <ModalLogin />
   </div>
 </template>
 <script>
@@ -63,7 +63,7 @@ export default {
   methods: {
     leaveFeedback() {
       if (!this.currentUser) {
-        eventBus.$emit("showModalLogin");
+        eventBus.$emit("showModalLogin", this.id );
         return;
       }
       this.$router.push({ name: "vote", params: { id: this.detailed.id } });

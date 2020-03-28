@@ -55,6 +55,7 @@
 <script>
 import EmailOutline from "mdi-vue/EmailOutline";
 import eventBus from "@/eventbus";
+import {mapState} from "vuex";
 import VueRecaptcha from 'vue-recaptcha';
 export default {
   components: {
@@ -62,11 +63,15 @@ export default {
     VueRecaptcha
   },
   data: () => ({
+    locationId:null,
     email: "",
     emailSent: false,
     isActive: false,
     siteKey: process.env.VUE_APP_RECAPTCHA_KEY
   }),
+  computed:{
+    ...mapState('user',['currentUser'])
+  },
   methods: {
     requestConfirmation() {
       const gResponse = grecaptcha.getResponse()
@@ -76,7 +81,7 @@ export default {
       else {
       this.$store.dispatch("user/requestEmailSignInLink", {
         email: this.email,
-        locationId: this.$route.params.id
+        locationId: this.locationId
       });
       this.emailSent = true;
       setTimeout(() => {
@@ -88,7 +93,8 @@ export default {
     }
   },
   mounted() {
-    eventBus.$on("showModalLogin", () => {
+    eventBus.$on("showModalLogin", locationId => {
+      this.locationId = locationId;
       this.isActive = true;
       if (this.emailSent) {
         setTimeout(() => {
@@ -96,11 +102,20 @@ export default {
         }, 2000);
       }
     });
+  },
+  watch:{
+    currentUser(){
+      this.emailSent = false;
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
 .modal {
   z-index: 9999;
+}
+.modal-content,
+.modal-card {
+  max-height: inherit;
 }
 </style>
