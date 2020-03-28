@@ -15,12 +15,12 @@
                   <input
                     class="input"
                     type="email"
-                    placeholder="Your email"
+                    placeholder="your email"
                     v-model="email"
                   />
                 </div>
               </div>
-
+              <vue-recaptcha :sitekey="siteKey" :loadRecaptchaScript="true"></vue-recaptcha>
               <div class="field is-grouped">
                 <div class="control">
                   <button class="button is-h" type="submit">
@@ -51,20 +51,29 @@
     ></button>
   </div>
 </template>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
 import EmailOutline from "mdi-vue/EmailOutline";
 import eventBus from "@/eventbus";
+import VueRecaptcha from 'vue-recaptcha';
 export default {
   components: {
-    EmailOutline
+    EmailOutline,
+    VueRecaptcha
   },
   data: () => ({
     email: "",
     emailSent: false,
-    isActive: false
+    isActive: false,
+    siteKey: process.env.VUE_APP_RECAPTCHA_KEY
   }),
   methods: {
     requestConfirmation() {
+      const gResponse = grecaptcha.getResponse()
+      if (gResponse == "" || gResponse == null || gResponse == undefined ) {
+        alert('Please check ReCaptcha')
+      }
+      else {
       this.$store.dispatch("user/requestEmailSignInLink", {
         email: this.email,
         locationId: this.$route.params.id
@@ -73,7 +82,7 @@ export default {
       setTimeout(() => {
         this.cancel();
       }, 2500);
-    },
+    }},
     cancel() {
       this.isActive = false;
     }
