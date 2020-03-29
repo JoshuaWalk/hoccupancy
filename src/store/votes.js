@@ -66,7 +66,7 @@ export default {
         .collection("votes")
         .doc(voteId)
         .update({
-          reported: true
+          reported: this.state.user.currentUser.uid
         });
     }
   }
