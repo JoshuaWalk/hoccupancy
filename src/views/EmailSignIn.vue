@@ -21,6 +21,7 @@
                 v-model="email"
               />
             </p>
+            <vue-recaptcha :sitekey="siteKey" :loadRecaptchaScript="true"></vue-recaptcha>
             <p class="control">
               <button class="button is-h" type="submit">
                 Confirm
@@ -37,17 +38,27 @@
     </div>
   </section>
 </template>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
 import EmailOutline from "mdi-vue/EmailOutline";
+import VueRecaptcha from 'vue-recaptcha';
+
 
 export default {
-  components: { EmailOutline },
+  components: { EmailOutline, VueRecaptcha },
   data: () => ({
     email: "",
-    emailSent: false
+    emailSent: false,
+    siteKey: process.env.VUE_APP_RECAPTCHA_KEY
   }),
   methods: {
     requestConfirmation() {
+      const gResponse = grecaptcha.getResponse()
+      if (gResponse == "" || gResponse == null || gResponse == undefined ) {
+        alert('Please check ReCaptcha')
+      }
+      else {
       this.$store.dispatch("user/requestEmailSignInLink", {
         email: this.email,
         locationId: this.$route.params.id
@@ -56,7 +67,7 @@ export default {
       setTimeout(() => {
         this.goToMain();
       }, 2500);
-    },
+    }},
     goToMain() {
       this.$router.go(-1);
     }
