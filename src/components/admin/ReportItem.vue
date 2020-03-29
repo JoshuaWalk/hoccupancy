@@ -108,7 +108,7 @@ export default {
     async updateAndPublish() {
       this.updating = true;
       try {
-        await this.$store.dispatch("admin/updateAndPublishReport", {
+        await this.$store.dispatch("reports/updateAndPublish", {
           locationId: this.item.locationId,
           voteId: this.item.voteId,
           comment: this.comment,
@@ -122,7 +122,7 @@ export default {
     async deleteReport() {
       this.deleting = true;
       try {
-        await this.$store.dispatch("admin/deleteReport", {
+        await this.$store.dispatch("reports/deleteReport", {
           locationId: this.item.locationId,
           voteId: this.item.voteId,
           index: this.index

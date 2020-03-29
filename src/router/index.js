@@ -25,7 +25,8 @@ const routes = [
         name: "reports",
         component: ListReport,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          adminRights: true // todo check flag
         }
       },
       {

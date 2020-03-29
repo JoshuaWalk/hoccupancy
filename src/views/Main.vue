@@ -1,16 +1,14 @@
 <template>
   <div class=" main-page">
-    <ModalLogin/>
+    <ModalLogin />
     <Nav class="nav-component" />
     <div class="columns without-side-margins list-main-wrapper">
-      <div
+      <List
         class="column is-12-touch is-6-desktop columns is-multiline is-marginless list-wrapper without-side-paddings without-side-margins"
+      />
+      <div
+        class="column is-12-touch is-6-desktop without-side-paddings map-view"
       >
-        <div class="column is-12">
-          <List />
-        </div>
-      </div>
-      <div class="column is-12-touch is-6-desktop without-side-paddings map-view">
         <Map />
       </div>
     </div>
@@ -21,6 +19,7 @@ import Nav from "@/components/Nav";
 import List from "@/components/List";
 import Map from "@/components/Map";
 import ModalLogin from "@/components/ModalLogin";
+import { mapState } from "vuex";
 export default {
   components: {
     Nav,
@@ -28,8 +27,8 @@ export default {
     Map,
     ModalLogin
   },
-  mounted() {
-    this.$store.dispatch("locations/list");
+  computed: {
+    ...mapState("locations", ["lastPart"])
   }
 };
 </script>
@@ -61,13 +60,9 @@ export default {
 .list-wrapper {
   min-height: 0px;
   flex-direction: column;
-  & > .column {
-    flex: 1;
-    overflow: auto;
-  }
 }
-.map-view{
-  @include touch(){
+.map-view {
+  @include touch() {
     display: none;
   }
 }

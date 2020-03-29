@@ -1,15 +1,15 @@
 <template>
   <div>
     <Nav class="nav-component" />
-    <section class="hero" v-if="detailed">
+    <section class="hero" v-if="location">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">
             Leave you impression about
             <router-link
-              :to="{ name: 'detailed', params: { id: detailed.id } }"
-              :title="detailed.name"
-              >{{ detailed.Name }}</router-link
+              :to="{ name: 'detailed', params: { id: location.id } }"
+              :title="location.name"
+              >{{ location.Name }}</router-link
             >
           </h1>
         </div>
@@ -32,14 +32,14 @@ export default {
     VoteEmailConfirmation
   },
   computed: {
-    ...mapState("locations", ["detailed"]),
+    ...mapState("location", ["location"]),
     ...mapState("user", ["currentUser"])
   },
   mounted() {
-    this.$store.dispatch("locations/detailed", { id: this.id });
+    this.$store.dispatch("location/load", { id: this.id });
   },
   beforeDestroy() {
-    this.$store.dispatch("locations/detailedClear");
+    this.$store.dispatch("location/clear");
   }
 };
 </script>

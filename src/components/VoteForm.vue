@@ -53,7 +53,7 @@
     </div>
   </section>
 </template>
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
 import VueRecaptcha from "vue-recaptcha";
 export default {
@@ -67,21 +67,20 @@ export default {
   },
   methods: {
     async vote() {
-      const gResponse = grecaptcha.getResponse()
-      if (gResponse == "" || gResponse == null || gResponse == undefined ) {
-        alert('Please check ReCaptcha')
+      const gResponse = grecaptcha.getResponse();
+      if (gResponse == "" || gResponse == null || gResponse == undefined) {
+        alert("Please check ReCaptcha");
+      } else {
+        await this.$store.dispatch("location/votes/vote", {
+          comment: this.comment,
+          status: this.status
+        });
+        this.$router.push({
+          name: "detailed",
+          params: { id: this.$route.params.id }
+        });
       }
-      else {
-      await this.$store.dispatch("locations/vote", {
-        id: this.$route.params.id,
-        comment: this.comment,
-        status: this.status
-      });
-      this.$router.push({
-        name: "detailed",
-        params: { id: this.$route.params.id }
-      });
-    }}
+    }
   }
 };
 </script>

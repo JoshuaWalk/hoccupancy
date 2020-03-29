@@ -13,7 +13,9 @@
             <span class="tag is-success is-medium" v-if="item.status == 'g'"
               >OK</span
             >
-            <span class="tag is-warning is-medium" v-else-if="item.status == 'y'"
+            <span
+              class="tag is-warning is-medium"
+              v-else-if="item.status == 'y'"
               >Not OK</span
             >
             <span class="tag is-danger is-medium" v-else-if="item.status == 'r'"
@@ -48,37 +50,37 @@ export default {
   },
   data: () => ({
     reported: false,
-    reporting: false,
+    reporting: false
   }),
   computed: {
     ...mapState("user", ["currentUser"]),
     date() {
       return new Date(this.item.createdAt).toGMTString();
     },
-    comment(){
+    comment() {
       if (this.reported) {
         if (this.item.comment) {
-          return '[The comment is under moderation due to report]';
+          return "[The comment is under moderation due to report]";
         }
-        return '';
+        return "";
       }
       return this.item.comment;
     }
   },
   methods: {
     async report() {
-      if(!this.currentUser) {
+      if (!this.currentUser) {
         eventBus.$emit("showModalLogin", this.$route.params.id);
         return;
       }
       this.reporting = true;
       try {
-        await this.$store.dispatch("locations/report", {
-          id: this.$route.params.id,
+        await this.$store.dispatch("location/votes/report", {
           voteId: this.item.id
         });
         this.reported = true;
       } catch (error) {
+        console.log(error);
         //todo notify
       }
       this.reporting = false;

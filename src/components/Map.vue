@@ -2,7 +2,7 @@
   <l-map :zoom="zoom" :center="center" ref="theMap" :options="options">
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-marker
-      v-for="(item, key) in itemsShowOnMap"
+      v-for="(item, key) in locationsShowOnMap"
       :lat-lng="item.marker"
       :icon="item.icon"
       :key="key"
@@ -35,16 +35,16 @@ export default {
         iconAnchor: [20, 20]
       },
       active: {
-        iconSize: [50, 50],
-        iconAnchor: [25, 25]
+        iconSize: [60, 60],
+        iconAnchor: [30, 30]
       },
       showOnMap: null
     };
   },
   computed: {
-    ...mapState("locations", ["items"]),
-    itemsShowOnMap() {
-      let items = this.items.map(_ => {
+    ...mapState("locations", ["locations"]),
+    locationsShowOnMap() {
+      let locations = this.locations.map(_ => {
         let result = Object.assign({}, _, {
           marker: this.createMarker(_),
           isActive: this.showOnMap && _.id == this.showOnMap.id
@@ -52,7 +52,7 @@ export default {
         result.icon = this.getIcon(result);
         return result;
       });
-      return items;
+      return locations;
     },
     center() {
       if (!this.showOnMap) return L.latLng(this.latitude, this.longitude);

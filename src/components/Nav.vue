@@ -68,9 +68,11 @@ export default {
     async logOut() {
       await this.$store.dispatch("user/signOut");
       this.$router.push({ name: "main" });
+      this.isActive = false;
     },
     async logIn() {
       eventBus.$emit("showModalLogin", this.id);
+      this.isActive = false;
     }
   }
 };
