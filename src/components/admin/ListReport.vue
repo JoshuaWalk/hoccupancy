@@ -2,11 +2,11 @@
   <section class="section">
     <div class="container">
       <ReportItem
-          v-for="(item, key) in reports"
-          :key="key"
-          :item="item"
-          :index="key"
-        />
+        v-for="(item, key) in reports"
+        :key="key"
+        :item="item"
+        :index="key"
+      />
     </div>
   </section>
 </template>

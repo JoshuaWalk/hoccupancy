@@ -55,22 +55,23 @@
 <script>
 import EmailOutline from "mdi-vue/EmailOutline";
 import eventBus from "@/eventbus";
-import {mapState} from "vuex";
 import VueRecaptcha from 'vue-recaptcha';
+import { mapState } from "vuex";
+
 export default {
   components: {
     EmailOutline,
     VueRecaptcha
   },
   data: () => ({
-    locationId:null,
+    locationId: null,
     email: "",
     emailSent: false,
     isActive: false,
     siteKey: process.env.VUE_APP_RECAPTCHA_KEY
   }),
-  computed:{
-    ...mapState('user',['currentUser'])
+  computed: {
+    ...mapState("user", ["currentUser"])
   },
   methods: {
     requestConfirmation() {
@@ -103,8 +104,8 @@ export default {
       }
     });
   },
-  watch:{
-    currentUser(){
+  watch: {
+    currentUser() {
       this.emailSent = false;
     }
   }
