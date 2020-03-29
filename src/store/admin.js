@@ -25,6 +25,9 @@ export default {
       reports.splice(index, 1);
       commit("reports", reports);
     },
+    async clearReports({ commit }) {
+      commit("reports", []);
+    },
     async updateAndPublishReport(
       { state, commit },
       { locationId, voteId, index, comment }

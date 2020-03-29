@@ -4,7 +4,12 @@
       <div class="media-content">
         <div class="field">
           <p class="control">
-            <strong>Location: </strong> {{ item.locationName }}
+            <strong>Location: </strong>
+            <router-link
+              :to="{ name: 'detailed', params: { id: item.locationId } }"
+              :title="item.locationName"
+              >{{ item.locationName }}</router-link
+            >
             <span class="tag is-success " v-if="status == 'g'">OK</span>
             <span class="tag is-warning " v-else-if="status == 'y'"
               >Not OK</span
@@ -23,43 +28,45 @@
             ></textarea>
           </p>
         </div>
-        <nav class="level is-mobile">
-          <div class="level-left">
-            <div class="level-item">
-              <div class="field has-addons">
-                <p class="control">
-                  <button
-                    class="button is-h is-small"
-                    :class="{ 'is-loading': updating }"
-                    :disabled="disabledForm"
-                    @click="updateAndPublish"
-                  >
-                    Update and publish
-                  </button>
-                </p>
-                <p class="control">
-                  <button
-                    class="button is-dark is-inverted is-small"
-                    :disabled="!changed || disabledForm"
-                    @click="reset"
-                  >
-                    Reset to original
-                  </button>
-                </p>
-              </div>
+        <nav class="level ">
+          <div class="level-item">
+            <div class="field is-fullwidth">
+              <p class="control is-expanded">
+                <button
+                  class="button is-h is-small is-fullwidth"
+                  :class="{ 'is-loading': updating }"
+                  :disabled="disabledForm"
+                  @click="updateAndPublish"
+                >
+                  Update and publish
+                </button>
+              </p>
             </div>
           </div>
-          <div class="level-right">
-            <div class="level-item">
-              <label class="checkbox">
+          <div class="level-item">
+            <div class="field is-fullwidth">
+              <p class="control is-expanded">
+                <button
+                  class="button is-dark is-fullwidth is-inverted is-small"
+                  :disabled="!changed || disabledForm"
+                  @click="reset"
+                >
+                  Reset to original
+                </button>
+              </p>
+            </div>
+          </div>
+          <div class="level-item">
+            <div class="field is-fullwidth">
+              <p class="control is-expanded">
                 <a
-                  class="button is-h is-inverted is-small"
+                  class="button is-h is-fullwidth is-inverted is-small"
                   :class="{ 'is-loading': deleting }"
                   :disabled="disabledForm"
                   @click="deleteReport"
                   ><Delete /> Delete</a
                 >
-              </label>
+              </p>
             </div>
           </div>
         </nav>
@@ -102,11 +109,11 @@ export default {
       this.updating = true;
       try {
         await this.$store.dispatch("admin/updateAndPublishReport", {
-        locationId: this.item.locationId,
-        voteId: this.item.voteId,
-        comment: this.comment,
-        index: this.index
-      });
+          locationId: this.item.locationId,
+          voteId: this.item.voteId,
+          comment: this.comment,
+          index: this.index
+        });
       } catch (error) {
         // todo notify
       }
@@ -138,10 +145,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~bulma/sass/utilities/_all";
 .tag {
   float: right;
 }
 .textarea {
   margin-top: 0.5rem;
+}
+.is-fullwidth {
+  width: 100%;
 }
 </style>
