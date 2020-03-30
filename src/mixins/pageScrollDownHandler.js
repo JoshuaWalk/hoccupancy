@@ -19,11 +19,5 @@ export default function(methodName) {
         if (offset == scrollHeight) this[methodName].call(this);
       }
     },
-    async mounted() {
-      window.addEventListener("scroll", this.onScroll);
-    },
-    beforeDestroy() {
-      window.removeEventListener("scroll", this.onScroll);
-    }
   };
 }

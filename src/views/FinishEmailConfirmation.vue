@@ -70,14 +70,11 @@ export default {
     }
   },
   async mounted() {
+    this.$store.dispatch("location/clear");
     document.body.classList.remove("has-navbar-fixed-top");
     this.email = await this.$store.dispatch("user/retrieveEmail");
     this.needToInput = !this.email;
     if (!this.needToInput) await this.verifyEmail();
   },
-  beforeDestroy() {
-    document.body.classList.add("has-navbar-fixed-top");
-    this.$store.dispatch("location/clear");
-  }
 };
 </script>

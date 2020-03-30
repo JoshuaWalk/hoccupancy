@@ -1,6 +1,6 @@
 <template>
   <section class="section" v-show="location">
-    <VoteItem v-for="(item, key) in votes" :key="key" :item="item" />
+    <VoteItem v-for="item in votes" :key="item.id" :item="item" />
     <a
       class="button is-white is-fullwidth hospital-item"
       @click="loadNextPartVotes"
@@ -13,9 +13,7 @@
 <script>
 import VoteItem from "@/components/VoteItem";
 import { mapState } from "vuex";
-import pageScrollDownHandler from "@/mixins/pageScrollDownHandler";
 export default {
-  mixins: [pageScrollDownHandler("loadNextPartVotes")],
   props: ["id"],
   components: {
     VoteItem

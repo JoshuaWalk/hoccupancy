@@ -1,6 +1,6 @@
 <template>
   <div class="list-root">
-    <div class="column is-12" @scroll.passive="onScroll">
+    <div class="column is-12">
       <div class="list-wrapper">
         <MainInfo />
         <ListItem
@@ -37,12 +37,6 @@ export default {
     loadNextPart() {
       this.$store.dispatch("locations/loadNextPart");
     },
-    onScroll(e) {
-      if (this.lastPart) return;
-      if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight) {
-        this.loadNextPart();
-      }
-    }
   },
   mounted() {
     this.loadNextPart();

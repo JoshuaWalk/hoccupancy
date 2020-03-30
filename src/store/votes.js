@@ -34,6 +34,7 @@ export default {
         });
     },
     async loadNextPart({ commit, state }) {
+      if (this.state.loading) return;
       commit("loading", true);
       try {
         let id = this.state.location.id;

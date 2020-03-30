@@ -5,7 +5,9 @@
         <p class="is-size-6 has-text-grey">
           Your email address will not be shown to anyone else.
         </p>
-        <p class="is-size-4 has-text-weight-medium">Please verify your email address</p>
+        <p class="is-size-4 has-text-weight-medium">
+          Please verify your email address
+        </p>
         <p class="is-size-5">
           To prevent malicious activity, you’ll have to verify your email
           address. After submitting, please check your inbox and click a link in
@@ -21,7 +23,7 @@
                 v-model="email"
               />
             </p>
-             <p class="help is-danger" v-if="!isEmailValid">
+            <p class="help is-danger" v-if="!isEmailValid">
               Please check captcha
             </p>
           </div>
@@ -51,7 +53,7 @@
       </div>
       <div class="container has-text-centered" v-else>
         <h2 class="subtitle has-text-info">
-           Please check your inbox and click on the verification link we send.
+          Please check your inbox and click on the verification link we send.
         </h2>
       </div>
     </div>
@@ -79,9 +81,9 @@ export default {
   methods: {
     requestConfirmation() {
       const gResponse = grecaptcha.getResponse();
-       if (!this.email) {
+      if (!this.email) {
         this.isEmailValid = false;
-        return
+        return;
       }
       if (gResponse == "" || gResponse == null || gResponse == undefined) {
         this.isCaptchaValid = false;
@@ -98,8 +100,8 @@ export default {
       }
     },
     goToMain() {
-      if(this.timeout) {
-        clearTimeout(this.timeout)
+      if (this.timeout) {
+        clearTimeout(this.timeout);
       }
       this.$router.push({ name: "main" });
     }
@@ -107,11 +109,8 @@ export default {
   mounted() {
     document.body.classList.remove("has-navbar-fixed-top");
   },
-  beforeDestroy() {
-    document.body.classList.add("has-navbar-fixed-top");
-  },
-  watch:{
-    currentUser(){
+  watch: {
+    currentUser() {
       this.goToMain();
     }
   }
@@ -132,11 +131,15 @@ export default {
     margin-bottom: 0;
   }
 }
-.is-size-6, .is-size-5, .is-size-4 {
+.is-size-6,
+.is-size-5,
+.is-size-4 {
   padding-bottom: 1rem;
 }
 
-.container{
-@include desktop() {max-width: 50%;}
+.container {
+  @include desktop() {
+    max-width: 50%;
+  }
 }
 </style>

@@ -5,11 +5,11 @@ export default {
   namespaced: true,
   state: {
     currentUser: null,
-    roles:[]
+    roles: []
   },
   mutations: {
     currentUser: (state, currentUser) => (state.currentUser = currentUser),
-    roles:(state, roles) => (state.roles = roles),
+    roles: (state, roles) => (state.roles = roles)
   },
   actions: {
     saveEmail: async (_, email) =>
@@ -18,7 +18,7 @@ export default {
     retrieveEmail: async () => window.localStorage.getItem("emailForSignIn"),
     load({ commit, dispatch }) {
       commit("currentUser", Auth.currentUser);
-      dispatch("requestRoles")
+      dispatch("requestRoles");
     },
     async requestEmailSignInLink({ dispatch }, { email, locationId }) {
       var actionCodeSettings = {
@@ -42,15 +42,18 @@ export default {
       await Auth.signOut();
       commit("currentUser", Auth.currentUser);
     },
-    async requestRoles({ commit, state }){
+    async requestRoles({ commit, state }) {
       let roles = [];
       try {
-        let rolesSnapshot = await DB.collection('user_role').doc(state.currentUser.uid).collection('roles').get();
-        rolesSnapshot.forEach(_=>roles.push(_.id))
+        let rolesSnapshot = await DB.collection("user_role")
+          .doc(state.currentUser.uid)
+          .collection("roles")
+          .get();
+        rolesSnapshot.forEach(_ => roles.push(_.id));
       } catch (error) {
         //todo notify
       }
-      commit('roles', roles);
+      commit("roles", roles);
     }
   }
 };

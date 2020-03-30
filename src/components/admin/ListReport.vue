@@ -23,9 +23,7 @@
 <script>
 import { mapState } from "vuex";
 import ReportItem from "@/components/admin/ReportItem";
-import pageScrollDownHandler from "@/mixins/pageScrollDownHandler";
 export default {
-  mixins: [pageScrollDownHandler("loadNextPartReports")],
   components: { ReportItem },
   computed: {
     ...mapState("reports", ["reports", "lastPart", "loading"]),
@@ -39,10 +37,8 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch("reports/clear");
     this.loadNextPartReports();
   },
-  beforeDestroy() {
-    this.$store.dispatch("reports/clear");
-  }
 };
 </script>

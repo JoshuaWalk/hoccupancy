@@ -36,15 +36,15 @@
         </div>
         <nav class="level">
           <div class="level-item">
-              <a
-                class="button is-white is-small flag-touch"
-                @click="report"
-                v-if="!reported"
-                :class="{ 'is-loading': reporting }"
-                title="Flag an abusive report for review by administrators"
-                ><FlagOutline /> Flag an abusive report</a
-              >
-            </div>
+            <a
+              class="button is-white is-small flag-touch"
+              @click="report"
+              v-if="!reported"
+              :class="{ 'is-loading': reporting }"
+              title="Flag an abusive report for review by administrators"
+              ><FlagOutline /> Flag an abusive report</a
+            >
+          </div>
         </nav>
       </div>
     </article>

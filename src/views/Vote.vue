@@ -23,33 +23,28 @@
         </div>
       </div>
     </section>
-    <VoteForm v-if="currentUser" class="vote-form" />
-    <VoteEmailConfirmation v-else />
+    <VoteForm />
   </div>
 </template>
 <script>
 import Nav from "@/components/Nav";
 import VoteForm from "@/components/VoteForm";
 import Info from "@/components/Info";
-import VoteEmailConfirmation from "@/components/VoteEmailConfirmation";
 import { mapState } from "vuex";
 export default {
   props: ["id"],
   components: {
     Nav,
     Info,
-    VoteForm,
-    VoteEmailConfirmation
+    VoteForm
   },
   computed: {
     ...mapState("location", ["location"]),
     ...mapState("user", ["currentUser"])
   },
   mounted() {
+    this.$store.dispatch("location/clear");
     this.$store.dispatch("location/load", { id: this.id });
   },
-  beforeDestroy() {
-    this.$store.dispatch("location/clear");
-  }
 };
 </script>

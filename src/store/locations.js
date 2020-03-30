@@ -17,6 +17,7 @@ export default {
   },
   actions: {
     async loadNextPart({ commit, state }) {
+      if (this.state.loading) return;
       commit("loading", true);
       try {
         let query = DB.collection("locations");

@@ -4,7 +4,7 @@
 <style lang="scss">
 html,
 body {
-  height:100%;
+  height: 100%;
 }
 @import "~bulma/sass/utilities/_all";
 @import "~bulma/sass/utilities/initial-variables";
@@ -13,7 +13,10 @@ $h: #ff637b;
 $h-invert: findColorInvert($h);
 @import "~bulma/sass/utilities/derived-variables";
 $addColors: (
-  "h": ($h, $h-invert)
+  "h": (
+    $h,
+    $h-invert
+  )
 );
 $colors: map-merge($colors, $addColors);
 

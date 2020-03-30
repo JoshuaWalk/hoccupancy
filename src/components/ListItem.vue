@@ -40,13 +40,13 @@
               <span class="tags has-addons" v-if="item.statistics.status">
                 <span class="tag">Last 24h</span>
                 <span class="tag is-success">{{
-                  item.statistics.amounts.g?item.statistics.amounts.g:'0'
+                  item.statistics.amounts.g ? item.statistics.amounts.g : "0"
                 }}</span>
                 <span class="tag is-warning">{{
-                  item.statistics.amounts.y?item.statistics.amounts.y:'0'
+                  item.statistics.amounts.y ? item.statistics.amounts.y : "0"
                 }}</span>
                 <span class="tag is-danger">{{
-                  item.statistics.amounts.r?item.statistics.amounts.r:'0'
+                  item.statistics.amounts.r ? item.statistics.amounts.r : "0"
                 }}</span>
               </span>
               <span class="tags has-addons" v-else>
