@@ -36,8 +36,7 @@
           >https://www.paypal.me/ConsensusLabs</a
         >
         <br />
-        Bitcoin: ... <br />
-        Ethereum: ...
+        If you would like to donate with crypto, please contact us at the email address below
       </p>
     </div>
   </div>

@@ -2,7 +2,7 @@
   <footer class="footer is-white">
     <div class="content is-size-7">
       <p>
-        Contact us: <a href="mailto:">contact email</a><br />
+        Contact us: <a href="mailto:info-hospitals-c19@consensuslabs.com">info-hospitals-c19@consensuslabs.com</a><br />
 
         Additional links for information: <br />
         <a
