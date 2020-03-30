@@ -7,12 +7,7 @@
           We kindly ask you to do it to prevent malicious activity
         </h2>
         <form v-on:submit.prevent="requestConfirmation">
-          <div class="field has-addons has-addons-centered">
-            <p class="control">
-              <a class="button is-light" @click="goToMain">
-                Cancel
-              </a>
-            </p>
+          <div class="field ">
             <p class="control is-expanded">
               <input
                 class="input"
@@ -21,13 +16,23 @@
                 v-model="email"
               />
             </p>
-            <vue-recaptcha :sitekey="siteKey" :loadRecaptchaScript="true"></vue-recaptcha>
-            <p class="control">
-              <button class="button is-h" type="submit">
-                Confirm
-              </button>
-            </p>
           </div>
+          <div class="field g-recaptcha">
+             <vue-recaptcha :sitekey="siteKey" :loadRecaptchaScript="true" class=""></vue-recaptcha>
+          <p class="help is-danger" v-if="!isCaptchaValid">Please check captcha</p>
+          </div>
+          <div class="field is-grouped">
+              <div class="control">
+                <button class="button is-h" type="submit">
+                  Confirm
+                </button>
+              </div>
+              <div class="control">
+                <a class="button is-light" @click="goToMain">
+                  Cancel
+                </a>
+              </div>
+            </div>
         </form>
       </div>
       <div class="container has-text-centered" v-else>
@@ -50,13 +55,15 @@ export default {
   data: () => ({
     email: "",
     emailSent: false,
-    siteKey: process.env.VUE_APP_RECAPTCHA_KEY
+    siteKey: process.env.VUE_APP_RECAPTCHA_KEY,
+    isCaptchaValid: true
   }),
   methods: {
     requestConfirmation() {
       const gResponse = grecaptcha.getResponse()
       if (gResponse == "" || gResponse == null || gResponse == undefined ) {
-        alert('Please check ReCaptcha')
+        this.isCaptchaValid = false;
+        return;
       }
       else {
       this.$store.dispatch("user/requestEmailSignInLink", {
@@ -69,7 +76,7 @@ export default {
       }, 2500);
     }},
     goToMain() {
-      this.$router.go(-1);
+      this.$router.push({name:'main'});
     }
   },
   mounted() {
@@ -80,3 +87,19 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+@import "~bulma/sass/utilities/_all";
+.container {
+  min-width: 16rem;;
+}
+.g-recaptcha {
+  margin-bottom: 0.75rem;
+  @include touch() {
+    transform: scale(0.87);
+    -webkit-transform: scale(0.87);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    margin-bottom: 0;
+  }
+}
+</style>

@@ -16,7 +16,9 @@
             >
             <span class="tag is-danger " v-else-if="status == 'r'">Bad</span>
             <br />
-            <strong>Email: </strong> {{ item.vote ? item.vote.email : "" }}
+            <strong>Feedback blamed by: </strong> <a :href="`mailto:${item.reportedBy}`">{{ item.reportedBy ? item.reportedBy : "" }}</a>
+            <br />
+            <strong>Feedback left by: </strong> <a :href="`mailto:${item.votedBy}`">{{ item.votedBy ? item.votedBy : "" }}</a>
             <br />
             <strong>Created at: </strong>{{ date }}
             <br />

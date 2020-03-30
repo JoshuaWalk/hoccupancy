@@ -16,21 +16,23 @@
         <h1 class="title">
           Please confirm your email to make sure that it's exact you...
         </h1>
-        <div class="field is-grouped">
-          <p class="control is-expanded">
-            <input
-              class="input"
-              type="email"
-              placeholder="Your email"
-              v-model="email"
-            />
-          </p>
-          <p class="control">
-            <a class="button is-h" @click="verifyEmail">
-              Confirm
-            </a>
-          </p>
-        </div>
+        <form @submit.prevent="verifyEmail">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              <input
+                class="input"
+                type="email"
+                placeholder="Your email"
+                v-model="email"
+              />
+            </p>
+            <p class="control">
+              <button class="button is-h">
+                Confirm
+              </button>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -60,9 +62,10 @@ export default {
         }
       } catch (error) {
         this.error = error.message;
+        this.needToInput = false;
         setTimeout(() => {
           this.$router.push({ name: "main" });
-        }, 2500);
+        }, 3000);
       }
     }
   },
@@ -74,7 +77,7 @@ export default {
   },
   beforeDestroy() {
     document.body.classList.add("has-navbar-fixed-top");
-    this.$store.dispatch("locations/detailedClear");
+    this.$store.dispatch("location/clear");
   }
 };
 </script>

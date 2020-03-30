@@ -67,7 +67,9 @@ export default {
   methods: {
     async logOut() {
       await this.$store.dispatch("user/signOut");
-      this.$router.push({ name: "main" });
+      if (this.$route.name != "main") {
+        this.$router.push({ name: "main" });
+      }
       this.isActive = false;
     },
     async logIn() {
