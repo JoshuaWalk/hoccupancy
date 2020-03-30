@@ -64,14 +64,20 @@
         <nav class="level is-mobile">
           <div class="level-left">
             <div class="level-item">
-              <a class="button is-h  is-small" @click="leaveFeedback" :title="item.name"
+              <a
+                class="button is-h  is-small"
+                @click="leaveFeedback"
+                :title="item.name"
                 >Make a report</a
               >
             </div>
           </div>
           <div class="level-right show-on-map">
             <div class="level-item">
-              <a class="button is-h is-inverted  is-small" @click="showOnMap(item)">
+              <a
+                class="button is-h is-inverted  is-small"
+                @click="showOnMap(item)"
+              >
                 <MapMarker /> Locate</a
               >
             </div>

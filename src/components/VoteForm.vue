@@ -37,11 +37,11 @@
             </div>
           </div>
           <div class="field">
-          <vue-recaptcha
-            :sitekey="siteKey"
-            :loadRecaptchaScript="true"
-            class="g-recaptcha"
-          ></vue-recaptcha>
+            <vue-recaptcha
+              :sitekey="siteKey"
+              :loadRecaptchaScript="true"
+              class="g-recaptcha"
+            ></vue-recaptcha>
           </div>
           <div class="field is-grouped">
             <div class="control">

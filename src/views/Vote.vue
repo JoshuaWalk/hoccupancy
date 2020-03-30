@@ -1,7 +1,7 @@
 <template>
   <div>
     <Nav class="nav-component" />
-       <Info/>
+    <Info />
     <section class="hero" v-if="location">
       <div class="hero-body">
         <div class="container">
@@ -23,7 +23,7 @@
         </div>
       </div>
     </section>
-    <VoteForm v-if="currentUser" class="vote-form"/>
+    <VoteForm v-if="currentUser" class="vote-form" />
     <VoteEmailConfirmation v-else />
   </div>
 </template>

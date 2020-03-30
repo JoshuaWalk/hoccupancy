@@ -4,61 +4,63 @@
     <div class="modal-content">
       <div class="box">
         <section class="section">
-        <div class="container" v-if="!emailSent">
-          <p class="is-size-6 has-text-grey">
-          Your email address will not be shown to anyone else.
-        </p>
-        <p class="is-size-4 has-text-weight-medium">Please verify your email address</p>
-        <p class="is-size-6">
-          To prevent malicious activity, you’ll have to verify your email
-          address. After submitting, please check your inbox and click a link in
-          the email we send.
-        </p>
-          <form v-on:submit.prevent="requestConfirmation">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  type="email"
-                  placeholder="your email"
-                  v-model="email"
-                />
+          <div class="container" v-if="!emailSent">
+            <p class="is-size-6 has-text-grey">
+              Your email address will not be shown to anyone else.
+            </p>
+            <p class="is-size-4 has-text-weight-medium">
+              Please verify your email address
+            </p>
+            <p class="is-size-6">
+              To prevent malicious activity, you’ll have to verify your email
+              address. After submitting, please check your inbox and click a
+              link in the email we send.
+            </p>
+            <form v-on:submit.prevent="requestConfirmation">
+              <div class="field">
+                <div class="control">
+                  <input
+                    class="input"
+                    type="email"
+                    placeholder="your email"
+                    v-model="email"
+                  />
+                </div>
+                <p class="help is-danger" v-if="!isEmailValid">
+                  Email required
+                </p>
               </div>
-              <p class="help is-danger" v-if="!isEmailValid">
-                Email required
-              </p>
-            </div>
-            <div class="field">
-              <vue-recaptcha
-                :sitekey="siteKey"
-                :loadRecaptchaScript="true"
-                class="g-recaptcha"
-              ></vue-recaptcha>
-              <p class="help is-danger" v-if="!isCaptchaValid">
-                Please check captcha
-              </p>
-            </div>
-            <div class="field is-grouped">
-              <div class="control">
-                <button class="button is-h" type="submit">
-                  Confirm
-                </button>
+              <div class="field">
+                <vue-recaptcha
+                  :sitekey="siteKey"
+                  :loadRecaptchaScript="true"
+                  class="g-recaptcha"
+                ></vue-recaptcha>
+                <p class="help is-danger" v-if="!isCaptchaValid">
+                  Please check captcha
+                </p>
               </div>
-              <div class="control">
-                <a class="button is-light" @click="cancel">
-                  Cancel
-                </a>
+              <div class="field is-grouped">
+                <div class="control">
+                  <button class="button is-h" type="submit">
+                    Confirm
+                  </button>
+                </div>
+                <div class="control">
+                  <a class="button is-light" @click="cancel">
+                    Cancel
+                  </a>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
-        <div class="container has-text-centered" v-else>
-          <h2 class="subtitle has-text-info">
-            Please check your inbox and click on the verification link we send.
-          </h2>
-        </div>
+            </form>
+          </div>
+          <div class="container has-text-centered" v-else>
+            <h2 class="subtitle has-text-info">
+              Please check your inbox and click on the verification link we
+              send.
+            </h2>
+          </div>
         </section>
-
       </div>
     </div>
     <button
@@ -96,7 +98,7 @@ export default {
       const gResponse = grecaptcha.getResponse();
       if (!this.email) {
         this.isEmailValid = false;
-        return
+        return;
       }
       if (gResponse == "" || gResponse == null || gResponse == undefined) {
         this.isCaptchaValid = false;
@@ -114,7 +116,7 @@ export default {
     cancel() {
       this.isActive = false;
       if (this.timeout) {
-        clearTimeout(this.timeout)
+        clearTimeout(this.timeout);
       }
     }
   },
@@ -146,7 +148,9 @@ export default {
 .modal-card {
   max-height: inherit;
 }
-.is-size-6, .is-size-5, .is-size-4 {
+.is-size-6,
+.is-size-5,
+.is-size-4 {
   padding-bottom: 1rem;
 }
 .g-recaptcha {

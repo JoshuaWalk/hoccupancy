@@ -12,17 +12,20 @@
         <Map />
       </div>
     </div>
+    <MainFooter />
   </div>
 </template>
 <script>
 import Nav from "@/components/Nav";
 import List from "@/components/List";
 import Map from "@/components/Map";
+import MainFooter from "@/components/MainFooter";
 import ModalLogin from "@/components/ModalLogin";
 import { mapState } from "vuex";
 export default {
   components: {
     Nav,
+    MainFooter,
     List,
     Map,
     ModalLogin

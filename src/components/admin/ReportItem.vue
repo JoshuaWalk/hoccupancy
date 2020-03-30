@@ -14,11 +14,19 @@
             <span class="tag is-warning " v-else-if="status == 'y'"
               >Near capacity</span
             >
-            <span class="tag is-danger " v-else-if="status == 'r'">Over capacity</span>
+            <span class="tag is-danger " v-else-if="status == 'r'"
+              >Over capacity</span
+            >
             <br />
-            <strong>Feedback blamed by: </strong> <a :href="`mailto:${item.reportedBy}`">{{ item.reportedBy ? item.reportedBy : "" }}</a>
+            <strong>Feedback blamed by: </strong>
+            <a :href="`mailto:${item.reportedBy}`">{{
+              item.reportedBy ? item.reportedBy : ""
+            }}</a>
             <br />
-            <strong>Feedback left by: </strong> <a :href="`mailto:${item.votedBy}`">{{ item.votedBy ? item.votedBy : "" }}</a>
+            <strong>Feedback left by: </strong>
+            <a :href="`mailto:${item.votedBy}`">{{
+              item.votedBy ? item.votedBy : ""
+            }}</a>
             <br />
             <strong>Created at: </strong>{{ date }}
             <br />

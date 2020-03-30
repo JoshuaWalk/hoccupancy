@@ -2,6 +2,7 @@
   <div class="list-root">
     <div class="column is-12" @scroll.passive="onScroll">
       <div class="list-wrapper">
+        <MainInfo />
         <ListItem
           v-for="(item, key) in locations"
           :key="key"
@@ -23,8 +24,9 @@
 import { mapState } from "vuex";
 import eventBus from "@/eventbus";
 import ListItem from "./ListItem";
+import MainInfo from "./MainInfo";
 export default {
-  components: { ListItem },
+  components: { ListItem, MainInfo },
   data: () => ({
     firstLoad: false
   }),

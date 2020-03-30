@@ -2,11 +2,10 @@
   <div>
     <ModalLogin />
     <Nav class="nav-component" />
-    <Info/>
+    <Info />
     <section class="hero" v-if="location">
       <div class="hero-body">
         <div class="container">
-          
           <a
             class="button is-h is-small leave-impression"
             @click="leaveFeedback"
@@ -16,11 +15,13 @@
           <h1 class="title">
             {{ location.Name }}
           </h1>
-           <div class="field is-grouped is-grouped-multiline">
+          <div class="field is-grouped is-grouped-multiline">
             <div class="control">
               <div class="tags has-addons ">
                 <span class="tag is-grey-darker is-medium">Past 24h</span>
-                <span class="tag is-grey-darker is-medium" v-if="!location.statistics.status"
+                <span
+                  class="tag is-grey-darker is-medium"
+                  v-if="!location.statistics.status"
                   >No data</span
                 >
                 <span
@@ -76,7 +77,6 @@
               >{{ location.Url }}</a
             ><span v-else>No url information</span>
           </p>
-         
         </div>
       </div>
     </section>
