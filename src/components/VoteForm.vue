@@ -1,54 +1,59 @@
 <template>
   <section class="hero">
-    <div class="hero-body">
+    <div class="hero-body vote-form">
       <div class="container">
-        <div class="buttons has-addons is-centered">
-          <button
-            class="button is-large"
-            @click="status = 'g'"
-            :class="{ 'is-selected is-success': status == 'g' }"
-          >
-            Ok
-          </button>
-          <button
-            class="button is-large"
-            @click="status = 'y'"
-            :class="{ 'is-selected is-warning': status == 'y' }"
-          >
-            Not OK
-          </button>
-          <button
-            class="button is-large"
-            @click="status = 'r'"
-            :class="{ 'is-selected is-danger': status == 'r' }"
-          >
-            Bad
-          </button>
-        </div>
-        <div class="field">
-          <label class="label">Comment</label>
-          <div class="control">
-            <textarea
-              class="textarea"
-              placeholder="Comment"
-              v-model="comment"
-            ></textarea>
+        <form @submit.prevent="vote">
+          <div class="buttons  is-centered">
+            <a
+              class="button is-size-5-desktop is-size-6-mobile is-fullwidth-touch "
+              @click="status = 'g'"
+              :class="{ 'is-selected is-success': status == 'g' }"
+            >
+              Space is available
+            </a>
+            <a
+              class="button is-size-5-desktop is-size-6-mobile is-fullwidth-touch"
+              @click="status = 'y'"
+              :class="{ 'is-selected is-warning': status == 'y' }"
+            >
+              Near capacity
+            </a>
+            <a
+              class="button is-size-5-desktop is-size-6-mobile is-fullwidth-touch"
+              @click="status = 'r'"
+              :class="{ 'is-selected is-danger': status == 'r' }"
+            >
+              Over capacity
+            </a>
           </div>
-        </div>
-        <vue-recaptcha
-          :sitekey="siteKey"
-          :loadRecaptchaScript="true"
-        ></vue-recaptcha>
-        <div class="field is-grouped">
-          <div class="control">
-            <button class="button is-h" @click="vote">Submit</button>
+          <div class="field">
+            <label class="label">Comment (optional)</label>
+            <div class="control">
+              <textarea
+                class="textarea"
+                placeholder="Comment"
+                v-model="comment"
+              ></textarea>
+            </div>
           </div>
-          <div class="control">
-            <button class="button is-light" @click="$router.go(-1)">
-              Cancel
-            </button>
+          <div class="field">
+          <vue-recaptcha
+            :sitekey="siteKey"
+            :loadRecaptchaScript="true"
+            class="g-recaptcha"
+          ></vue-recaptcha>
           </div>
-        </div>
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-h">Submit</button>
+            </div>
+            <div class="control">
+              <a class="button is-light" @click="$router.go(-1)">
+                Cancel
+              </a>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -84,3 +89,31 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+@import "~bulma/sass/utilities/_all";
+.vote-form {
+  padding-top: 0;
+}
+
+.button {
+  &.is-fullwidth-touch {
+    @include touch() {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%;
+    }
+  }
+}
+
+.g-recaptcha {
+  margin-bottom: 0.75rem;
+  @include touch() {
+    transform: scale(0.87);
+    -webkit-transform: scale(0.87);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    margin-bottom: 0;
+  }
+}
+</style>

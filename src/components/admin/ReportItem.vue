@@ -10,11 +10,11 @@
               :title="item.locationName"
               >{{ item.locationName }}</router-link
             >
-            <span class="tag is-success " v-if="status == 'g'">OK</span>
+            <span class="tag is-success " v-if="status == 'g'">Available</span>
             <span class="tag is-warning " v-else-if="status == 'y'"
-              >Not OK</span
+              >Near capacity</span
             >
-            <span class="tag is-danger " v-else-if="status == 'r'">Bad</span>
+            <span class="tag is-danger " v-else-if="status == 'r'">Over capacity</span>
             <br />
             <strong>Feedback blamed by: </strong> <a :href="`mailto:${item.reportedBy}`">{{ item.reportedBy ? item.reportedBy : "" }}</a>
             <br />

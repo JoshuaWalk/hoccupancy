@@ -5,36 +5,47 @@
         <div class="content">
           <p>
             <strong>{{ item.email }}</strong>
+            <a
+              class="button is-white is-small flag-desktop"
+              @click="report"
+              v-if="!reported"
+              title="Flag an abusive report for review by administrators"
+              :class="{ 'is-loading': reporting }"
+              ><FlagOutline /> Flag an abusive report</a
+            >
             <br />
             <small>{{ date }}</small>
             <br />
           </p>
           <p>
             <span class="tag is-success is-medium" v-if="item.status == 'g'"
-              >OK</span
+              >Available</span
             >
             <span
               class="tag is-warning is-medium"
               v-else-if="item.status == 'y'"
-              >Not OK</span
+              >Near capacity</span
             >
             <span class="tag is-danger is-medium" v-else-if="item.status == 'r'"
-              >Bad</span
+              >Over capacity</span
             >
           </p>
           <p v-if="comment">
             {{ comment }}
           </p>
         </div>
-      </div>
-      <div class="media-right">
-        <a
-          class="button is-white is-small"
-          @click="report"
-          v-if="!reported"
-          :class="{ 'is-loading': reporting }"
-          ><FlagOutline /> Report</a
-        >
+        <nav class="level">
+          <div class="level-item">
+              <a
+                class="button is-white is-small flag-touch"
+                @click="report"
+                v-if="!reported"
+                :class="{ 'is-loading': reporting }"
+                title="Flag an abusive report for review by administrators"
+                ><FlagOutline /> Flag an abusive report</a
+              >
+            </div>
+        </nav>
       </div>
     </article>
   </div>
@@ -92,7 +103,21 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~bulma/sass/utilities/_all";
 .reported {
   background: #f0f0f0;
+}
+.flag {
+  &-touch {
+    @include desktop() {
+      display: none;
+    }
+  }
+  &-desktop {
+    float: right;
+    @include touch() {
+      display: none;
+    }
+  }
 }
 </style>

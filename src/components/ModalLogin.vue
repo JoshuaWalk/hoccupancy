@@ -3,11 +3,17 @@
     <div class="modal-background"></div>
     <div class="modal-content">
       <div class="box">
+        <section class="section">
         <div class="container" v-if="!emailSent">
-          <h1 class="title">PLease verify your email</h1>
-          <h2 class="subtitle">
-            We kindly ask you to do it to prevent malicious activity
-          </h2>
+          <p class="is-size-6 has-text-grey">
+          Your email address will not be shown to anyone else.
+        </p>
+        <p class="is-size-4 has-text-weight-medium">Please verify your email address</p>
+        <p class="is-size-6">
+          To prevent malicious activity, you’ll have to verify your email
+          address. After submitting, please check your inbox and click a link in
+          the email we send.
+        </p>
           <form v-on:submit.prevent="requestConfirmation">
             <div class="field">
               <div class="control">
@@ -18,6 +24,9 @@
                   v-model="email"
                 />
               </div>
+              <p class="help is-danger" v-if="!isEmailValid">
+                Email required
+              </p>
             </div>
             <div class="field">
               <vue-recaptcha
@@ -45,10 +54,11 @@
         </div>
         <div class="container has-text-centered" v-else>
           <h2 class="subtitle has-text-info">
-            We have sent an email with a confirmation link to you
-            <EmailOutline />
+            Please check your inbox and click on the verification link we send.
           </h2>
         </div>
+        </section>
+
       </div>
     </div>
     <button
@@ -60,14 +70,12 @@
 </template>
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
-import EmailOutline from "mdi-vue/EmailOutline";
 import eventBus from "@/eventbus";
 import VueRecaptcha from "vue-recaptcha";
 import { mapState } from "vuex";
 
 export default {
   components: {
-    EmailOutline,
     VueRecaptcha
   },
   data: () => ({
@@ -76,7 +84,9 @@ export default {
     emailSent: false,
     isActive: false,
     siteKey: process.env.VUE_APP_RECAPTCHA_KEY,
-    isCaptchaValid: true
+    isCaptchaValid: true,
+    isEmailValid: true,
+    timeout: null
   }),
   computed: {
     ...mapState("user", ["currentUser"])
@@ -84,6 +94,10 @@ export default {
   methods: {
     requestConfirmation() {
       const gResponse = grecaptcha.getResponse();
+      if (!this.email) {
+        this.isEmailValid = false;
+        return
+      }
       if (gResponse == "" || gResponse == null || gResponse == undefined) {
         this.isCaptchaValid = false;
         return;
@@ -93,12 +107,15 @@ export default {
         locationId: this.locationId
       });
       this.emailSent = true;
-      setTimeout(() => {
+      this.timeout = setTimeout(() => {
         this.cancel();
-      }, 2500);
+      }, 20000);
     },
     cancel() {
       this.isActive = false;
+      if (this.timeout) {
+        clearTimeout(this.timeout)
+      }
     }
   },
   mounted() {
@@ -106,15 +123,16 @@ export default {
       this.locationId = locationId;
       this.isActive = true;
       if (this.emailSent) {
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
           this.cancel();
-        }, 2000);
+        }, 20000);
       }
     });
   },
   watch: {
     currentUser() {
       this.emailSent = false;
+      this.cancel();
     }
   }
 };
@@ -128,12 +146,14 @@ export default {
 .modal-card {
   max-height: inherit;
 }
-
+.is-size-6, .is-size-5, .is-size-4 {
+  padding-bottom: 1rem;
+}
 .g-recaptcha {
   margin-bottom: 0.75rem;
   @include touch() {
-    transform: scale(0.87);
-    -webkit-transform: scale(0.87);
+    transform: scale(0.77);
+    -webkit-transform: scale(0.77);
     transform-origin: 0 0;
     -webkit-transform-origin: 0 0;
     margin-bottom: 0;

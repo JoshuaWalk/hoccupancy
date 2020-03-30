@@ -2,14 +2,16 @@
   <div>
     <ModalLogin />
     <Nav class="nav-component" />
+    <Info/>
     <section class="hero" v-if="location">
       <div class="hero-body">
         <div class="container">
+          
           <a
             class="button is-h is-small leave-impression"
             @click="leaveFeedback"
             :title="location.name"
-            >Vote</a
+            >Make a report</a
           >
           <h1 class="title">
             {{ location.Name }}
@@ -17,24 +19,24 @@
            <div class="field is-grouped is-grouped-multiline">
             <div class="control">
               <div class="tags has-addons ">
-                <span class="tag is-grey-darker is-medium">Overall 24h</span>
+                <span class="tag is-grey-darker is-medium">Past 24h</span>
                 <span class="tag is-grey-darker is-medium" v-if="!location.statistics.status"
-                  >No info</span
+                  >No data</span
                 >
                 <span
                   class="tag is-success is-medium"
                   v-else-if="location.statistics.status == 'g'"
-                  >OK</span
+                  >Available</span
                 >
                 <span
                   class="tag is-warning is-medium"
                   v-else-if="location.statistics.status == 'y'"
-                  >Not OK</span
+                  >Near capacity</span
                 >
                 <span
                   class="tag is-danger is-medium"
                   v-else-if="location.statistics.status == 'r'"
-                  >Bad</span
+                  >Over capacity</span
                 >
               </div>
             </div>
@@ -84,6 +86,7 @@
 <script>
 import Nav from "@/components/Nav";
 import ModalLogin from "@/components/ModalLogin";
+import Info from "@/components/Info";
 import VoteList from "@/components/VoteList";
 import { mapState } from "vuex";
 import eventBus from "@/eventbus";
@@ -92,6 +95,7 @@ export default {
   components: {
     VoteList,
     Nav,
+    Info,
     ModalLogin
   },
   computed: {

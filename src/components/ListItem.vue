@@ -15,24 +15,24 @@
           <div class="field is-grouped is-grouped-multiline">
             <div class="control">
               <div class="tags has-addons">
-                <span class="tag is-grey-darker">Overall 24h</span>
+                <span class="tag is-grey-darker">Past 24h</span>
                 <span class="tag is-grey-darker" v-if="!item.statistics.status"
-                  >No info</span
+                  >No data</span
                 >
                 <span
                   class="tag is-success"
                   v-else-if="item.statistics.status == 'g'"
-                  >OK</span
+                  >Available</span
                 >
                 <span
                   class="tag is-warning"
                   v-else-if="item.statistics.status == 'y'"
-                  >Not OK</span
+                  >Near capacity</span
                 >
                 <span
                   class="tag is-danger"
                   v-else-if="item.statistics.status == 'r'"
-                  >Bad</span
+                  >Over capacity</span
                 >
               </div>
             </div>
@@ -65,14 +65,14 @@
           <div class="level-left">
             <div class="level-item">
               <a class="button is-h  is-small" @click="leaveFeedback" :title="item.name"
-                >Feedback</a
+                >Make a report</a
               >
             </div>
           </div>
           <div class="level-right show-on-map">
             <div class="level-item">
               <a class="button is-h is-inverted  is-small" @click="showOnMap(item)">
-                <MapMarker /> Show on map</a
+                <MapMarker /> Locate</a
               >
             </div>
           </div>
