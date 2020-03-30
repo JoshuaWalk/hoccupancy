@@ -44,14 +44,14 @@
             <div class="control">
               <span class="tags has-addons" v-if="location.statistics.status">
                 <span class="tag is-medium">Last 24h</span>
-                <span class="tag is-success is-medium">{{
-                  location.statistics.amounts.g
+                <span class="tag is-success">{{
+                  location.statistics.amounts.g?location.statistics.amounts.g:'0'
                 }}</span>
-                <span class="tag is-warning is-medium">{{
-                  location.statistics.amounts.y
+                <span class="tag is-warning">{{
+                  location.statistics.amounts.y?location.statistics.amounts.y:'0'
                 }}</span>
-                <span class="tag is-danger is-medium">{{
-                  location.statistics.amounts.r
+                <span class="tag is-danger">{{
+                  location.statistics.amounts.r?location.statistics.amounts.r:'0'
                 }}</span>
               </span>
               <span class="tags has-addons is-medium" v-else>

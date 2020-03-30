@@ -7,17 +7,29 @@
       :icon="item.icon"
       :key="key"
       :class="{ 'is-active': item.isActive }"
-    ></l-marker>
+    >
+      <l-popup>
+        <p>
+          <router-link
+            :to="{ name: 'detailed', params: { id: item.id } }"
+            :title="item.name"
+            >{{ item.Name }}</router-link
+          ><br />
+
+          {{ item.Address }}
+        </p>
+      </l-popup>
+    </l-marker>
   </l-map>
 </template>
 <script>
-import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 import L from "leaflet";
 import { mapState } from "vuex";
 import eventBus from "@/eventbus";
 
 export default {
-  components: { LMap, LTileLayer, LMarker },
+  components: { LMap, LTileLayer, LMarker, LPopup },
   data() {
     return {
       zoom: 12,
@@ -35,8 +47,8 @@ export default {
         iconAnchor: [20, 20]
       },
       active: {
-        iconSize: [60, 60],
-        iconAnchor: [30, 30]
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
       },
       showOnMap: null
     };
