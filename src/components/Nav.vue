@@ -73,7 +73,7 @@ export default {
       this.isActive = false;
     },
     async logIn() {
-      eventBus.$emit("showModalLogin", this.id);
+      eventBus.$emit("showModalLogin", {});
       this.isActive = false;
     }
   }

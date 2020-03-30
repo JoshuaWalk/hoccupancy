@@ -9,6 +9,9 @@ import Nav from "@/components/admin/Nav";
 export default {
   components: {
     Nav
+  },
+  mounted() {
+    document.body.classList.add("has-navbar-fixed-top");
   }
 };
 </script>

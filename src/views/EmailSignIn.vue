@@ -91,7 +91,8 @@ export default {
       } else {
         this.$store.dispatch("user/requestEmailSignInLink", {
           email: this.email,
-          locationId: this.$route.params.id
+          locationId: this.$route.params.id,
+          vote: true
         });
         this.emailSent = true;
         this.timeout = setTimeout(() => {

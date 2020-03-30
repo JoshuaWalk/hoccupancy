@@ -20,11 +20,11 @@ export default {
       commit("currentUser", Auth.currentUser);
       dispatch("requestRoles");
     },
-    async requestEmailSignInLink({ dispatch }, { email, locationId }) {
+    async requestEmailSignInLink({ dispatch }, { email, locationId, vote }) {
       var actionCodeSettings = {
         url: `${process.env.VUE_APP_FIREBASE_EMAIL_SIGNIN_URL}${
           locationId ? "?locationId=" + locationId : ""
-        }`,
+        }${vote ? "&vote=true" : ""}`,
         handleCodeInApp: true
       };
       await Auth.sendSignInLinkToEmail(email, actionCodeSettings);

@@ -32,6 +32,9 @@ export default {
   },
   computed: {
     ...mapState("locations", ["lastPart"])
+  },
+  mounted() {
+    document.body.classList.add("has-navbar-fixed-top");
   }
 };
 </script>

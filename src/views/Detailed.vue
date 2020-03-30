@@ -110,19 +110,19 @@ export default {
     ...mapState("user", ["currentUser"])
   },
   mounted() {
+    document.body.classList.add("has-navbar-fixed-top");
     this.$store.dispatch("location/clear");
     this.$store.dispatch("location/load", { id: this.id });
   },
   methods: {
     leaveFeedback() {
       if (!this.currentUser) {
-        eventBus.$emit("showModalLogin", this.id);
+        eventBus.$emit("showModalLogin", { locationId: this.id, vote: true });
         return;
       }
       this.$router.push({ name: "vote", params: { id: this.location.id } });
     }
-  },
-  
+  }
 };
 </script>
 <style lang="scss" scoped>

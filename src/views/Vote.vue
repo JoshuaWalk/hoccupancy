@@ -43,8 +43,9 @@ export default {
     ...mapState("user", ["currentUser"])
   },
   mounted() {
+    document.body.classList.add("has-navbar-fixed-top");
     this.$store.dispatch("location/clear");
     this.$store.dispatch("location/load", { id: this.id });
-  },
+  }
 };
 </script>

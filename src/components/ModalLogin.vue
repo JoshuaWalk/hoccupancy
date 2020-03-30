@@ -88,7 +88,8 @@ export default {
     siteKey: process.env.VUE_APP_RECAPTCHA_KEY,
     isCaptchaValid: true,
     isEmailValid: true,
-    timeout: null
+    timeout: null,
+    vote: false
   }),
   computed: {
     ...mapState("user", ["currentUser"])
@@ -106,7 +107,8 @@ export default {
       }
       this.$store.dispatch("user/requestEmailSignInLink", {
         email: this.email,
-        locationId: this.locationId
+        locationId: this.locationId,
+        vote: this.vote
       });
       this.emailSent = true;
       this.timeout = setTimeout(() => {
@@ -121,9 +123,10 @@ export default {
     }
   },
   mounted() {
-    eventBus.$on("showModalLogin", locationId => {
+    eventBus.$on("showModalLogin", ({ locationId, vote }) => {
       this.locationId = locationId;
       this.isActive = true;
+      this.vote = vote;
       if (this.emailSent) {
         this.timeout = setTimeout(() => {
           this.cancel();
@@ -134,6 +137,7 @@ export default {
   watch: {
     currentUser() {
       this.emailSent = false;
+      this.vote = false;
       this.cancel();
     }
   }

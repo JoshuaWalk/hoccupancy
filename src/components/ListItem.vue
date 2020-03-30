@@ -103,7 +103,7 @@ export default {
     },
     leaveFeedback() {
       if (!this.currentUser) {
-        eventBus.$emit("showModalLogin", this.item.id);
+        eventBus.$emit("showModalLogin", {locationId: this.item.id, vote:true});
         return;
       }
       this.$router.push({ name: "vote", params: { id: this.item.id } });

@@ -81,7 +81,7 @@ export default {
   methods: {
     async report() {
       if (!this.currentUser) {
-        eventBus.$emit("showModalLogin", this.$route.params.id);
+        eventBus.$emit("showModalLogin", { locationId: this.$route.params.id });
         return;
       }
       this.reporting = true;

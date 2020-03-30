@@ -39,6 +39,6 @@ export default {
   mounted() {
     this.$store.dispatch("reports/clear");
     this.loadNextPartReports();
-  },
+  }
 };
 </script>

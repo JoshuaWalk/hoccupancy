@@ -52,7 +52,7 @@ export default {
         });
         if (this.$route.query.locationId) {
           this.$router.push({
-            name: "vote",
+            name: this.$route.query.vote ? "vote" : "detailed",
             params: { id: this.$route.query.locationId }
           });
         } else {
@@ -75,6 +75,6 @@ export default {
     this.email = await this.$store.dispatch("user/retrieveEmail");
     this.needToInput = !this.email;
     if (!this.needToInput) await this.verifyEmail();
-  },
+  }
 };
 </script>
