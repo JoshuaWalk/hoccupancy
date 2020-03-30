@@ -14,6 +14,49 @@
           <h1 class="title">
             {{ location.Name }}
           </h1>
+           <div class="field is-grouped is-grouped-multiline">
+            <div class="control">
+              <div class="tags has-addons ">
+                <span class="tag is-grey-darker is-medium">Overall 24h</span>
+                <span class="tag is-grey-darker is-medium" v-if="!location.statistics.status"
+                  >No info</span
+                >
+                <span
+                  class="tag is-success is-medium"
+                  v-else-if="location.statistics.status == 'g'"
+                  >OK</span
+                >
+                <span
+                  class="tag is-warning is-medium"
+                  v-else-if="location.statistics.status == 'y'"
+                  >Not OK</span
+                >
+                <span
+                  class="tag is-danger is-medium"
+                  v-else-if="location.statistics.status == 'r'"
+                  >Bad</span
+                >
+              </div>
+            </div>
+            <div class="control">
+              <span class="tags has-addons" v-if="location.statistics.status">
+                <span class="tag is-medium">Last 24h</span>
+                <span class="tag is-success is-medium">{{
+                  location.statistics.amounts.g
+                }}</span>
+                <span class="tag is-warning is-medium">{{
+                  location.statistics.amounts.y
+                }}</span>
+                <span class="tag is-danger is-medium">{{
+                  location.statistics.amounts.r
+                }}</span>
+              </span>
+              <span class="tags has-addons is-medium" v-else>
+                <span class="tag">Last 24h</span>
+                <span class="tag ">No data</span>
+              </span>
+            </div>
+          </div>
           <h2 class="subtitle">
             {{ location.Address }}
           </h2>
@@ -31,6 +74,7 @@
               >{{ location.Url }}</a
             ><span v-else>No url information</span>
           </p>
+         
         </div>
       </div>
     </section>
