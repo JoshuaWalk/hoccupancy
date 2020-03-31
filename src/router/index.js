@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Main from "../views/Main.vue";
-import Detailed from "../views/Detailed.vue";
+import MainWrapper from "../views/MainWrapper.vue";
+import DetailedWrapper from "../views/DetailedWrapper.vue";
 import Vote from "../views/Vote.vue";
 import FinishEmailConfirmation from "../views/FinishEmailConfirmation.vue";
 import EmailSignIn from "../views/EmailSignIn.vue";
@@ -14,7 +14,7 @@ const routes = [
   {
     path: "/",
     name: "main",
-    component: Main
+    component: MainWrapper
   },
   {
     path: "/admin",
@@ -57,7 +57,7 @@ const routes = [
   {
     path: "/:id",
     name: "detailed",
-    component: Detailed,
+    component: DetailedWrapper,
     props: true
   }
 ];

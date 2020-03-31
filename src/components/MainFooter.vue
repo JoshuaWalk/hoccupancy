@@ -1,8 +1,9 @@
 <template>
   <footer class="footer is-white">
-    <div class="content is-size-7">
+    <div class="content is-size-6">
       <p>
-        Contact us: <a href="mailto:info-hospitals-c19@consensuslabs.com">info-hospitals-c19@consensuslabs.com</a><br />
+        Contact us:<a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
+        <br />
 
         Additional links for information: <br />
         <a
@@ -18,6 +19,12 @@
     </div>
   </footer>
 </template>
+<script>
+import contactInfo from "@/mixins/contactInfo";
+export default {
+  mixins: [contactInfo]
+};
+</script>
 <style lang="scss" scoped>
 @import "~bulma/sass/utilities/_all";
 .footer {

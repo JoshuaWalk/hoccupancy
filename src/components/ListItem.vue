@@ -15,7 +15,7 @@
           <div class="field is-grouped is-grouped-multiline">
             <div class="control">
               <div class="tags has-addons">
-                <span class="tag is-grey-darker">Past 24h</span>
+                <span class="tag is-grey-darker">Current status</span>
                 <span class="tag is-grey-darker" v-if="!item.statistics.status"
                   >No data</span
                 >
@@ -68,7 +68,7 @@
                 class="button is-h  is-small"
                 @click="leaveFeedback"
                 :title="item.name"
-                >Make a report</a
+                >Submit a report</a
               >
             </div>
           </div>
@@ -103,7 +103,10 @@ export default {
     },
     leaveFeedback() {
       if (!this.currentUser) {
-        eventBus.$emit("showModalLogin", {locationId: this.item.id, vote:true});
+        eventBus.$emit("showModalLogin", {
+          locationId: this.item.id,
+          vote: true
+        });
         return;
       }
       this.$router.push({ name: "vote", params: { id: this.item.id } });

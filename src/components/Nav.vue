@@ -85,6 +85,7 @@ export default {
   margin-left: 0 !important;
 }
 .navbar {
+  z-index: 9000;
   box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1);
 }
 .is-fullwidth-mobile {

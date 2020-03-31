@@ -2,7 +2,6 @@
   <div class="list-root">
     <div class="column is-12">
       <div class="list-wrapper">
-        <MainInfo />
         <ListItem
           v-for="(item, key) in locations"
           :key="key"
@@ -24,9 +23,8 @@
 import { mapState } from "vuex";
 import eventBus from "@/eventbus";
 import ListItem from "./ListItem";
-import MainInfo from "./MainInfo";
 export default {
-  components: { ListItem, MainInfo },
+  components: { ListItem },
   data: () => ({
     firstLoad: false
   }),
@@ -36,7 +34,7 @@ export default {
   methods: {
     loadNextPart() {
       this.$store.dispatch("locations/loadNextPart");
-    },
+    }
   },
   mounted() {
     this.loadNextPart();
@@ -52,6 +50,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~bulma/sass/utilities/_all";
 .list-wrapper {
   height: 100%;
 }
@@ -63,5 +62,8 @@ export default {
 .list-root > .column {
   flex: 1;
   overflow: auto;
+  @include touch() {
+    overflow: hidden;
+  }
 }
 </style>

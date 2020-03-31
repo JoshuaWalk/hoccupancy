@@ -2,7 +2,11 @@
   <div>
     <ModalLogin />
     <Nav class="nav-component" />
-    <Info />
+    <section class="hero">
+      <div class="hero-body colors-info">
+        <Info class="container" />
+      </div>
+    </section>
     <section class="hero" v-if="location">
       <div class="hero-body">
         <div class="container">
@@ -10,7 +14,7 @@
             class="button is-h is-small leave-impression"
             @click="leaveFeedback"
             :title="location.name"
-            >Make a report</a
+            >Submit a report</a
           >
           <h1 class="title">
             {{ location.Name }}
@@ -18,7 +22,7 @@
           <div class="field is-grouped is-grouped-multiline">
             <div class="control">
               <div class="tags has-addons ">
-                <span class="tag is-grey-darker is-medium">Past 24h</span>
+                <span class="tag is-grey-darker is-medium">Current status</span>
                 <span
                   class="tag is-grey-darker is-medium"
                   v-if="!location.statistics.status"
@@ -128,5 +132,9 @@ export default {
 <style lang="scss" scoped>
 .leave-impression {
   float: right;
+}
+.colors-info {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 </style>

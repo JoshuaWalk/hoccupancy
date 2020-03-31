@@ -3,15 +3,17 @@
     <div class="hero-body">
       <div class="container" v-if="!emailSent">
         <p class="is-size-6 has-text-grey">
-          Your email address will not be shown to anyone else.
+          Your email address will not be revealed or shared with anyone.
         </p>
         <p class="is-size-4 has-text-weight-medium">
-          Please verify your email address
+          Just one more step: Enter your email address to receive a link to
+          submit your report.
         </p>
         <p class="is-size-5">
-          To prevent malicious activity, you’ll have to verify your email
-          address. After submitting, please check your inbox and click a link in
-          the email we send.
+          To prevent malicious activity, we ask that you please verify your
+          email address. After submitting, please check your inbox and click a
+          link in the email that will take you directly to submitting your
+          report.
         </p>
         <form v-on:submit.prevent="requestConfirmation">
           <div class="field ">
@@ -19,7 +21,7 @@
               <input
                 class="input"
                 type="email"
-                placeholder="Your email"
+                placeholder="Enter your email address here"
                 v-model="email"
               />
             </p>
@@ -53,7 +55,7 @@
       </div>
       <div class="container has-text-centered" v-else>
         <h2 class="subtitle has-text-info">
-          Please check your inbox and click on the verification link we send.
+          Please check your inbox and click on the verification link.
         </h2>
       </div>
     </div>

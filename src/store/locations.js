@@ -1,6 +1,6 @@
 import { DB } from "@/firebase";
 import calcStatus from "@/extras/calcStatus";
-const locationPageSize = 20;
+const locationPageSize = 66;
 export default {
   namespaced: true,
   state: {

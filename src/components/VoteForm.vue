@@ -26,6 +26,8 @@
               Over capacity
             </a>
           </div>
+          <Info class="field" />
+          <CommentInfo class="field" />
           <div class="field">
             <label class="label">Comment (optional)</label>
             <div class="control">
@@ -61,6 +63,8 @@
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
 import VueRecaptcha from "vue-recaptcha";
+import Info from "@/components/Info";
+import CommentInfo from "@/components/CommentInfo";
 export default {
   data: () => ({
     status: "g",
@@ -68,7 +72,9 @@ export default {
     siteKey: process.env.VUE_APP_RECAPTCHA_KEY
   }),
   components: {
-    VueRecaptcha
+    VueRecaptcha,
+    Info,
+    CommentInfo
   },
   methods: {
     async vote() {
@@ -115,5 +121,8 @@ export default {
     -webkit-transform-origin: 0 0;
     margin-bottom: 0;
   }
+}
+.info {
+  padding-bottom: 0.75rem;
 }
 </style>

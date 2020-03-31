@@ -22,7 +22,7 @@
               <input
                 class="input"
                 type="email"
-                placeholder="Your email"
+                placeholder="Enter your email address here"
                 v-model="email"
               />
             </p>
