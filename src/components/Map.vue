@@ -7,6 +7,7 @@
       :icon="item.icon"
       :key="key"
       :class="{ 'is-active': item.isActive }"
+      @click="focusItem(item)"
     >
       <l-popup>
         <p>
@@ -100,6 +101,10 @@ export default {
           item.isActive ? this.active : this.unactive
         )
       );
+    },
+    focusItem(item) {
+      eventBus.$emit("focusItem", item)
+      console.log(item, "hello")
     }
   },
   mounted() {

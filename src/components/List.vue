@@ -2,6 +2,7 @@
   <div class="list-root">
     <div class="column is-12">
       <div class="list-wrapper">
+          <ListItem v-if="focusItem" :item="this.focusItem" />
         <ListItem
           v-for="(item, key) in locations"
           :key="key"
@@ -26,18 +27,21 @@ import ListItem from "./ListItem";
 export default {
   components: { ListItem },
   data: () => ({
-    firstLoad: false
+    firstLoad: false,
+    focusItem: null
   }),
   computed: {
-    ...mapState("locations", ["locations", "lastPart", "loading"])
+    ...mapState("locations", ["locations", "lastPart", "loading"]),
   },
   methods: {
     loadNextPart() {
       this.$store.dispatch("locations/loadNextPart");
-    }
+    },
+    
   },
   mounted() {
     this.loadNextPart();
+    eventBus.$on("focusItem", _ => (this.focusItem = _))
   },
   watch: {
     locations(to) {
